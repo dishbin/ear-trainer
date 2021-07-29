@@ -2,6 +2,14 @@
 const header = document.querySelector('.header');
 const main = document.querySelector('.main');
 const buttonSelects = document.querySelector('.button-selects');
+const modalShade = document.querySelector('#modal');
+const modalTextbox = document.querySelector('#modal-textbox');
+const resultHeader = document.querySelector('#result-header');
+const resultPercent = document.querySelector('#result-percent');
+const resultSpread = document.querySelector('#result-spread');
+const modalScore = document.querySelector('#modal-score');
+const resultsCorrect = document.querySelector('#correct-notes');
+const resultsIncorrect = document.querySelector('#incorrect-notes');
 
 //create header
 let heading = document.createElement('h1');
@@ -84,13 +92,13 @@ function getNote () {
         incorrectNotes.push(answer);
    
     noteIndex++;
-    checkForScore();
     if (noteIndex < 12) {
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000)
     } else {
-        startBtn.style.backgroundColor = 'red';
+        displayModal();
+        startBtn.classList.add('star-button-red');
     }   
 }
 
@@ -108,6 +116,7 @@ function playCurrentNote () {
     }, context.currentTime + 1000)
 }
 
+//reset 
 function populateRoundValues () {
     roundValues = [];
     noteValues = [];
@@ -119,10 +128,61 @@ function populateRoundValues () {
     };
 }
 
-function checkForScore() {
-    if (noteIndex === 12) {
-        console.log('You got ' + (correctNotes.length / 12) + "% of the notes correct!");
-        console.log('Correct:', correctNotes);
-        console.log('Incorrect:', incorrectNotes);
+//is called upon game completion
+function displayModal () {
+    //display modal
+    modalShade.style.display = 'block';
+    modalTextbox.style.display = 'block';
+    //get score
+    let percentCorrect = parseInt((correctNotes.length / 12) * 100);
+    //choose header adn percent color based on score; display results
+    if (percentCorrect < 25) {
+        resultPercent.style.color = 'red';
+        resultHeader.innerHTML = 'yikes!!';
+        resultPercent.innerHTML = `${percentCorrect}%`;
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+    } else if (percentCorrect >= 25 && percentCorrect < 50) {
+        resultPercent.style.color = 'black';
+        resultHeader.innerHTML = 'good try!!';
+        resultPercent.innerHTML = `${percentCorrect}%`;
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+    } else if (percentCorrect >= 50 && percentCorrect < 75) {
+        resultPercent.style.color = 'black';
+        resultHeader.innerHTML = 'well done!!';
+        resultPercent.innerHTML = `${percentCorrect}%`;
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+    } else if (percentCorrect >= 75) {
+        resultPercent.style.color = rgb(153, 255, 153);
+        resultHeader.innerHTML = 'wow!!';
+        resultPercent.innerHTML = `${percentCorrect}%`;
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
     }
+    //log correct notes
+    for (let i = 0; i < correctNotes.length; i++) {
+        let newNote = document.createElement('p');
+        newNote.innerHTML = correctNotes[i];
+        newNote.classList.add('result-note');
+        resultsCorrect.appendChild(newNote);
+    }
+    //log incorrect notes
+    for (let i = 0; i < incorrectNotes.length; i++) {
+        let newNote = document.createElement('p');
+        newNote.innerHTML = incorrectNotes[i];
+        newNote.classList.add('result-note');
+        resultsIncorrect.appendChild(newNote);
+    }
+    //display play again button
+    let playAgain = document.createElement('button');
+    playAgain.innerHTML = 'play again?';
+    playAgain.classList.add('play-again');
+    playAgain.addEventListener('click', function () {
+        resultsCorrect.innerHTML = "";
+        resultsIncorrect.innerHTML = "";
+        modalTextbox.removeChild(playAgain);
+        modalShade.style.display = 'none';
+        modalTextbox.style.display = 'none';
+        startBtn.style.backgroundColor; 
+        startGame();
+    });
+    modalTextbox.appendChild(playAgain);
 }
