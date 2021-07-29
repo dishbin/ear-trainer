@@ -25,20 +25,36 @@ main.appendChild(replayBtn);
 let noteButtons = [...buttonSelects.children];
 noteButtons.forEach(button => button.addEventListener('click', getNote));
 
+//create tone genereator
+let AudioContext = window.AudioContext || window.webkitAudioContext;
+
+const context = new AudioContext;
+const masterVolume = context.createGain();
+masterVolume.connect(context.destination);
 
 
 //start game function
 function startGame () {
     console.log('game has started');
+    playCurrentNote();
 }
 
 //replay tone function
 function replayTone () {
     console.log('the tone is being replayed');
+    playCurrentNote();
 }
 
 //get note function
 
 function getNote () {
     console.log(this.value);
+}
+
+function playCurrentNote () {
+    const oscillator = context.createOscillator();
+    oscillator.frequency.setValueAtTime(220, 0);
+    oscillator.connect(masterVolume);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 1);
 }
