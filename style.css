@@ -40,14 +40,44 @@ h1 {
 
 .button-selects {
     margin: 50px auto;
+    padding: 5px;
     text-align: center;
 }
 
-.button-selects button {
+.note-button {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black 
+}
+
+.note-button {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.note-button:hover {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+    background-color: gray;
+}
+
+.playing-note {
     width: 75px;
     height: 75px;
     margin: 2px;
     border-radius: 5px;
     border: none;
-    box-shadow: 0px 3px 5px black 
+    box-shadow: 0px 3px 5px black;
+    background-color: rgb(153, 255, 153);
 }

@@ -23,6 +23,7 @@ main.appendChild(replayBtn);
 
 //activate select buttons
 let noteButtons = [...buttonSelects.children];
+noteButtons.forEach(button => button.classList.add('note-button'))
 noteButtons.forEach(button => button.addEventListener('click', getNote));
 
 //create tone genereator
@@ -52,31 +53,53 @@ let noteIndex = 0;
 let roundValues = [];
 let noteValues = [];
 
+let correctNotes = [];
+let incorrectNotes = [];
+
 //start game function
-function startGame () {
-    
+function startGame () { 
+    noteIndex = 0;
     populateRoundValues();
-    playCurrentNote();
+    startBtn.innerHTML = "";
+    startBtn.disabled = true;
+    window.setTimeout(() => {
+        playCurrentNote();
+    }, 1000)
 }
 
 //replay tone function
 function replayTone () {
-    console.log('the tone is being replayed');
     playCurrentNote();
 }
 
 //get note function
 function getNote () {
-    return this.value;
+    let answer = this.value;
+    (answer === noteValues[noteIndex]) ?
+        correctNotes.push(answer) :
+        incorrectNotes.push(answer);
+   
+    noteIndex++;
+    checkForScore();
+    if (noteIndex < 12) {
+    window.setTimeout(() => {
+        playCurrentNote();
+    }, 1000)
+    }   
 }
+
 
 //play current note
 function playCurrentNote () {
+    startBtn.classList.add('playing-note');
     const oscillator = context.createOscillator();
-    oscillator.frequency.setValueAtTime(220, 0);
+    oscillator.frequency.setValueAtTime(roundValues[noteIndex], 0);
     oscillator.connect(masterVolume);
     oscillator.start();
     oscillator.stop(context.currentTime + 1);
+    window.setTimeout (() => {
+        startBtn.classList.remove('playing-note');
+    }, context.currentTime + 1000) 
 }
 
 function populateRoundValues () {
@@ -84,11 +107,16 @@ function populateRoundValues () {
     noteValues = [];
     for (let i = 0; i < buttonSelects.children.length; i++) {
         let randVal = Math.floor(Math.random() * buttonSelects.children.length);
-        console.log(randVal);
         let randNote = buttonSelects.children[randVal].id;
         noteValues.push(randNote);
         roundValues.push(Object.values(octaveThree)[randVal]);
     };
-    console.log(roundValues);
-    console.log(noteValues);
+}
+
+function checkForScore() {
+    if (noteIndex === 12) {
+        console.log('You got ' + (correctNotes.length / 12) + "% of the notes correct!");
+        console.log('Correct:', correctNotes);
+        console.log('Incorrect:', incorrectNotes);
+    }
 }
