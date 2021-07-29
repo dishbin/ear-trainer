@@ -11,14 +11,17 @@ header.appendChild(heading);
 //create main buttons
 let startBtn = document.createElement('button');
 startBtn.innerHTML = 'begin training';
+startBtn.classList.add('start-button');
 startBtn.addEventListener('click', startGame);
 main.appendChild(startBtn);
 
 
 let replayBtn = document.createElement('button');
 replayBtn.innerHTML = 'replay tone';
+replayBtn.classList.add('replay-button');
 replayBtn.addEventListener('click', replayTone);
 main.appendChild(replayBtn);
+replayBtn.disabled = true;
 
 
 //activate select buttons
@@ -58,6 +61,7 @@ let incorrectNotes = [];
 
 //start game function
 function startGame () { 
+    replayBtn.disabled = false;
     noteIndex = 0;
     populateRoundValues();
     startBtn.innerHTML = "";
@@ -85,6 +89,8 @@ function getNote () {
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000)
+    } else {
+        startBtn.style.backgroundColor = 'red';
     }   
 }
 
@@ -99,7 +105,7 @@ function playCurrentNote () {
     oscillator.stop(context.currentTime + 1);
     window.setTimeout (() => {
         startBtn.classList.remove('playing-note');
-    }, context.currentTime + 1000) 
+    }, context.currentTime + 1000)
 }
 
 function populateRoundValues () {
