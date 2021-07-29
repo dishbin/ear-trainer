@@ -11,10 +11,34 @@ header.appendChild(heading);
 //create main buttons
 let startBtn = document.createElement('button');
 startBtn.innerHTML = 'begin training';
+startBtn.addEventListener('click', startGame);
 main.appendChild(startBtn);
+
 
 let replayBtn = document.createElement('button');
 replayBtn.innerHTML = 'replay tone';
+replayBtn.addEventListener('click', replayTone);
 main.appendChild(replayBtn);
 
-//create select buttons
+
+//activate select buttons
+let noteButtons = [...buttonSelects.children];
+noteButtons.forEach(button => button.addEventListener('click', getNote));
+
+
+
+//start game function
+function startGame () {
+    console.log('game has started');
+}
+
+//replay tone function
+function replayTone () {
+    console.log('the tone is being replayed');
+}
+
+//get note function
+
+function getNote () {
+    console.log(this.value);
+}
