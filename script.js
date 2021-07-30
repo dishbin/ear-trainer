@@ -116,15 +116,12 @@ function playCurrentNote () {
     }, context.currentTime + 1000)
 }
 
-//reset 
+//set note values for each round
 function populateRoundValues () {
     roundValues = [];
     noteValues = [];
     for (let i = 0; i < buttonSelects.children.length; i++) {
-        let randVal = Math.floor(Math.random() * buttonSelects.children.length);
-        let randNote = buttonSelects.children[randVal].id;
-        noteValues.push(randNote);
-        roundValues.push(Object.values(octaveThree)[randVal]);
+        generateAndCheckRoundValues();
     };
 }
 
@@ -189,6 +186,7 @@ function displayModal () {
     modalTextbox.appendChild(playAgain);
 }
 
+//removes correct/incorrect notes from score modal
 function removeScores () {
    for (let i = 0; i < correctNotes.length; i++) {
         resultsCorrect.removeChild(resultsCorrect.lastChild);    
@@ -196,4 +194,18 @@ function removeScores () {
     for (let i = 0; i < incorrectNotes.length; i++) {
         resultsIncorrect.removeChild(resultsIncorrect.lastChild); 
     } 
+}
+
+//creates a round value and checks to see if 
+//it has already been added to this round
+//to make sure that each note is only in the round once
+function generateAndCheckRoundValues () {
+    let randVal = Math.floor(Math.random() * buttonSelects.children.length);
+    let randNote = buttonSelects.children[randVal].id;
+    if (!(noteValues.includes(randNote))) {
+        noteValues.push(randNote);
+        roundValues.push(Object.values(octaveThree)[randVal]);
+    } else {
+        generateAndCheckRoundValues();
+    }
 }
