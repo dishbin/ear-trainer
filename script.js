@@ -16,6 +16,24 @@ let heading = document.createElement('h1');
 heading.innerHTML = 'semi-tone ear trainer';
 header.appendChild(heading);
 
+let infiniteModeToggle = false;
+
+let infiniteButton = document.createElement('button');
+infiniteButton.innerHTML = '<span>&#8734;</span>';
+infiniteButton.classList.add('infinite-button');
+infiniteButton.addEventListener('click', function () {
+    if (infiniteModeToggle === false) {
+        infiniteModeToggle = true;
+        infiniteMode();
+    } else {
+        infiniteButton.innerHTML = '<span>&#8734;</span>';
+        startBtn.disabled = false;
+        startBtn.innerHTML = 'begin training';
+        startBtn.classList.add('start-button');
+    }
+});
+header.appendChild(infiniteButton);
+
 //create main buttons
 let startBtn = document.createElement('button');
 startBtn.innerHTML = 'begin training';
@@ -35,7 +53,7 @@ replayBtn.disabled = true;
 //activate select buttons
 let noteButtons = [...buttonSelects.children];
 noteButtons.forEach(button => button.classList.add('note-button'))
-noteButtons.forEach(button => button.addEventListener('click', getNote));
+// noteButtons.forEach(button => button.addEventListener('click', getNote));
 
 //create tone genereator
 let AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -60,6 +78,7 @@ let octaveThree = {
 }
 
 let noteIndex = 0;
+let infiniteNoteCount = 0;
 
 let roundValues = [];
 let noteValues = [];
@@ -69,8 +88,11 @@ let incorrectNotes = [];
 
 //start game function
 function startGame () { 
+    noteButtons.forEach(button => button.addEventListener('click', getNote));
     replayBtn.disabled = false;
     noteIndex = 0;
+    correctNotes = [];
+    incorrectNotes = [];
     populateRoundValues();
     startBtn.innerHTML = "";
     startBtn.disabled = true;
@@ -84,13 +106,14 @@ function replayTone () {
     playCurrentNote();
 }
 
-//get note function
+//logs the user choice, triggers next note and 
+//checks for score after each click
 function getNote () {
     let answer = this.value;
     (answer === noteValues[noteIndex]) ?
         correctNotes.push(answer) :
         incorrectNotes.push(noteValues[noteIndex]);
-   
+    
     noteIndex++;
     if (noteIndex < 12) {
     window.setTimeout(() => {
@@ -103,7 +126,7 @@ function getNote () {
 }
 
 
-//play current note
+//plays current note in noteValues index
 function playCurrentNote () {
     startBtn.classList.add('playing-note');
     const oscillator = context.createOscillator();
@@ -183,7 +206,8 @@ function addNoteSpread () {
     //log correct notes
     for (let i = 0; i < correctNotes.length; i++) {
         let newNote = document.createElement('p');
-        newNote.innerHTML = correctNotes[i];
+        let noteText = document.getElementById(correctNotes[i]);
+        newNote.innerHTML = noteText.innerHTML
         newNote.classList.add('result-note');
         resultsCorrect.appendChild(newNote);
     }
@@ -191,7 +215,8 @@ function addNoteSpread () {
     //log incorrect notes
     for (let i = 0; i < incorrectNotes.length; i++) {
         let newNote = document.createElement('p');
-        newNote.innerHTML = incorrectNotes[i];
+        let noteText = document.getElementById(incorrectNotes[i]);
+        newNote.innerHTML = noteText.innerHTML
         newNote.classList.add('result-note');
         resultsIncorrect.appendChild(newNote);
     }
@@ -218,4 +243,35 @@ function generateAndCheckRoundValues () {
     } else {
         generateAndCheckRoundValues();
     }
+}
+
+function infiniteMode () {
+
+noteButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
+    replayBtn.disabled = false;
+    noteIndex = 0;
+    populateRoundValues();
+    startBtn.innerHTML = "";
+    startBtn.disabled = true;
+    window.setTimeout(() => {
+        playCurrentNote();
+    }, 1000);
+}
+
+function getInfintiteNote () {
+    infiniteNoteCount++;
+    let answer = this.value;
+    (answer === noteValues[noteIndex]) ?
+        correctNotes.push(answer) :
+        incorrectNotes.push(noteValues[noteIndex]);
+    let infinitePercent = parseInt((correctNotes.length / infiniteNoteCount) * 100);
+    infiniteButton.innerHTML = `${infinitePercent}%`;
+    noteIndex++;
+    if (noteIndex < 12) {
+    window.setTimeout(() => {
+        playCurrentNote();
+    }, 1000)
+    } else {
+        infiniteMode();
+    }   
 }
