@@ -44,6 +44,9 @@ difficultyButton.classList.add('difficulty-button');
 difficultyButton.classList.add('easy');
 difficultyButton.innerHTML = 'easy';
 difficultyButton.addEventListener('click', function () {
+    startBtn.disabled = false;
+    startBtn.innerHTML = 'begin training';
+    startBtn.classList.add('start-button');
     if (difficultyButton.classList.value.includes('easy')) {
         difficultyButton.classList.remove('easy');
         difficultyButton.classList.add('medium');
@@ -92,7 +95,8 @@ const context = new AudioContext;
 const masterVolume = context.createGain();
 masterVolume.connect(context.destination);
 
-let octaveThree = {
+let easyOctave = {
+    //semitones from C3 to B3
     C: 130.81,
     Csharp: 138.59,
     D: 146.83,
@@ -107,20 +111,40 @@ let octaveThree = {
     B: 246.94
 }
 
-let octaveFour = {
-    C: 130.81,
-    Csharp: 138.59,
-    D: 146.83,
-    Dsharp: 155.56,
-    E: 164.81,
-    F: 174.61,
-    Fsharp: 185.00,
-    G: 196.00,
-    Gsharp: 207.65,
-    A: 220.00,
-    Asharp: 233.08,
-    B: 246.94
+let mediumOctave = {
+    //semitones from C4 to F4
+    C: 261.63,
+    Csharp: 277.18,
+    D: 293.66,
+    Dsharp: 311.13,
+    E: 329.63,
+    F: 349.23,
+    //semitones from Fsharp2 to B2
+    Fsharp: 92.50,
+    G: 98.00,
+    Gsharp: 103.83,
+    A: 110.00,
+    Asharp: 116.54,
+    B: 123.47
 }
+
+let hardOctave = {
+    //semitones from C2 to F2
+    C: 65.41,
+    Csharp: 69.30,
+    D: 73.42,
+    Dsharp: 77.78,
+    E: 82.41,
+    F: 87.31,
+    //semitones from Fsharp4 to B4
+    Fsharp: 369.99,
+    G: 392.00,
+    Gsharp: 415.30,
+    A: 440.00,
+    Asharp: 466.16,
+    B: 493.88
+}
+
 
 
 
@@ -203,7 +227,21 @@ function generateAndCheckRoundValues () {
     let randNote = buttonSelects.children[randVal].id;
     if (!(noteValues.includes(randNote))) {
         noteValues.push(randNote);
-        roundValues.push(Object.values(octaveThree)[randVal]);
+        if (difficultyButton.classList.value.includes('easy')) {
+            roundValues.push(Object.values(easyOctave)[randVal]);
+        } else if (difficultyButton.classList.value.includes('medium')) {
+            let mediumModifier = Math.floor(Math.random() * 2);
+            (mediumModifier === 0) ? 
+                roundValues.push(Object.values(easyOctave)[randVal]) :
+                roundValues.push(Object.values(mediumOctave)[randVal]) ;
+        } else if (difficultyButton.classList.value.includes('hard')) {
+            let hardModifier = Math.floor(Math.random() * 3);
+            (hardModifier === 0) ? 
+                roundValues.push(Object.values(easyOctave)[randVal]) :
+                (hardModifier === 1) ?
+                    roundValues.push(Object.values(mediumOctave)[randVal]) :
+                    roundValues.push(Object.values(hardOctave)[randVal]) ;
+        }
     } else {
         generateAndCheckRoundValues();
     }
@@ -298,6 +336,7 @@ function infiniteMode () {
     replayBtn.disabled = false;
     noteIndex = 0;
     populateRoundValues();
+    console.log(roundValues);
     startBtn.innerHTML = "";
     startBtn.disabled = true;
     window.setTimeout(() => {
