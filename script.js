@@ -22,10 +22,13 @@ let infiniteButton = document.createElement('button');
 infiniteButton.innerHTML = '<span>&#8734;</span>';
 infiniteButton.classList.add('infinite-button');
 infiniteButton.addEventListener('click', function () {
+    infiniteButton.innerHTML = '--%'
     if (infiniteModeToggle === false) {
         infiniteModeToggle = true;
         infiniteMode();
     } else {
+        noteButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
+        infiniteModeToggle = false;
         infiniteButton.innerHTML = '<span>&#8734;</span>';
         startBtn.disabled = false;
         startBtn.innerHTML = 'begin training';
@@ -246,8 +249,8 @@ function generateAndCheckRoundValues () {
 }
 
 function infiniteMode () {
-
-noteButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
+    noteButtons.forEach(button => button.removeEventListener('click', getNote));
+    noteButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
     replayBtn.disabled = false;
     noteIndex = 0;
     populateRoundValues();
