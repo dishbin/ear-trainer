@@ -164,6 +164,7 @@ function displayModal () {
         newNote.classList.add('result-note');
         resultsCorrect.appendChild(newNote);
     }
+    
     //log incorrect notes
     for (let i = 0; i < incorrectNotes.length; i++) {
         let newNote = document.createElement('p');
@@ -176,8 +177,9 @@ function displayModal () {
     playAgain.innerHTML = 'play again?';
     playAgain.classList.add('play-again');
     playAgain.addEventListener('click', function () {
-        resultsCorrect.innerHTML = "";
-        resultsIncorrect.innerHTML = "";
+        removeScores();
+        correctNotes = [];
+        incorrectNotes = [];
         modalTextbox.removeChild(playAgain);
         modalShade.style.display = 'none';
         modalTextbox.style.display = 'none';
@@ -185,4 +187,13 @@ function displayModal () {
         startGame();
     });
     modalTextbox.appendChild(playAgain);
+}
+
+function removeScores () {
+   for (let i = 0; i < correctNotes.length; i++) {
+        resultsCorrect.removeChild(resultsCorrect.lastChild);    
+    }
+    for (let i = 0; i < incorrectNotes.length; i++) {
+        resultsIncorrect.removeChild(resultsIncorrect.lastChild); 
+    } 
 }
