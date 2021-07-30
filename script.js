@@ -97,52 +97,50 @@ masterVolume.connect(context.destination);
 
 let easyOctave = {
     //semitones from C3 to B3
-    C: 130.81,
-    Csharp: 138.59,
-    D: 146.83,
-    Dsharp: 155.56,
-    E: 164.81,
-    F: 174.61,
-    Fsharp: 185.00,
-    G: 196.00,
-    Gsharp: 207.65,
-    A: 220.00,
-    Asharp: 233.08,
-    B: 246.94
-}
-
-let mediumOctave = {
-    //semitones from C4 to F4
     C: 261.63,
     Csharp: 277.18,
     D: 293.66,
     Dsharp: 311.13,
     E: 329.63,
     F: 349.23,
-    //semitones from Fsharp2 to B2
-    Fsharp: 92.50,
-    G: 98.00,
-    Gsharp: 103.83,
-    A: 110.00,
-    Asharp: 116.54,
-    B: 123.47
-}
-
-let hardOctave = {
-    //semitones from C2 to F2
-    C: 65.41,
-    Csharp: 69.30,
-    D: 73.42,
-    Dsharp: 77.78,
-    E: 82.41,
-    F: 87.31,
-    //semitones from Fsharp4 to B4
     Fsharp: 369.99,
     G: 392.00,
     Gsharp: 415.30,
     A: 440.00,
     Asharp: 466.16,
     B: 493.88
+    
+}
+
+let mediumOctave = {
+    C: 523.25,
+    Csharp: 554.37,
+    D: 587.33,
+    Dsharp: 622.25,
+    E: 659.25,
+    F: 698.46,
+    Fsharp: 185.00,
+    G: 196.00,
+    Gsharp: 207.65,
+    A: 220.00,
+    Asharp: 233.08,
+    B: 246.94
+    
+}
+
+let hardOctave = {
+    C: 130.81,
+    Csharp: 138.59,
+    D: 146.83,
+    Dsharp: 155.56,
+    E: 164.81,
+    F: 174.61,
+    Fsharp: 739.99,
+    G: 783.99,
+    Gsharp: 830.61,
+    A: 880.00,
+    Asharp: 932.33,
+    B: 987.77
 }
 
 
