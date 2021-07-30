@@ -24,9 +24,11 @@ infiniteButton.classList.add('infinite-button');
 infiniteButton.addEventListener('click', function () {
     infiniteButton.innerHTML = '--%'
     if (infiniteModeToggle === false) {
+        infiniteButton.classList.add('infinite-button-active');
         infiniteModeToggle = true;
         infiniteMode();
     } else {
+        infiniteButton.classList.remove('infinite-button-active');
         noteButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
         infiniteModeToggle = false;
         infiniteButton.innerHTML = '<span>&#8734;</span>';
