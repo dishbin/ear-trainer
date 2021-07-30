@@ -89,7 +89,7 @@ function getNote () {
     let answer = this.value;
     (answer === noteValues[noteIndex]) ?
         correctNotes.push(answer) :
-        incorrectNotes.push(answer);
+        incorrectNotes.push(noteValues[noteIndex]);
    
     noteIndex++;
     if (noteIndex < 12) {
@@ -130,6 +130,29 @@ function displayModal () {
     //display modal
     modalShade.style.display = 'block';
     modalTextbox.style.display = 'block';
+    //get and display score
+    getScore();
+    //log correct/incorrect notes
+    addNoteSpread();
+    //display play again button
+    let playAgain = document.createElement('button');
+    playAgain.innerHTML = 'play again?';
+    playAgain.classList.add('play-again');
+    playAgain.addEventListener('click', function () {
+        removeScores();
+        correctNotes = [];
+        incorrectNotes = [];
+        modalTextbox.removeChild(playAgain);
+        modalShade.style.display = 'none';
+        modalTextbox.style.display = 'none';
+        startBtn.style.backgroundColor; 
+        startGame();
+    });
+    modalTextbox.appendChild(playAgain);
+}
+
+//gets and prepares score for display
+function getScore () {
     //get score
     let percentCorrect = parseInt((correctNotes.length / 12) * 100);
     //choose header adn percent color based on score; display results
@@ -154,6 +177,9 @@ function displayModal () {
         resultPercent.innerHTML = `${percentCorrect}%`;
         resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
     }
+}
+
+function addNoteSpread () {
     //log correct notes
     for (let i = 0; i < correctNotes.length; i++) {
         let newNote = document.createElement('p');
@@ -169,23 +195,7 @@ function displayModal () {
         newNote.classList.add('result-note');
         resultsIncorrect.appendChild(newNote);
     }
-    //display play again button
-    let playAgain = document.createElement('button');
-    playAgain.innerHTML = 'play again?';
-    playAgain.classList.add('play-again');
-    playAgain.addEventListener('click', function () {
-        removeScores();
-        correctNotes = [];
-        incorrectNotes = [];
-        modalTextbox.removeChild(playAgain);
-        modalShade.style.display = 'none';
-        modalTextbox.style.display = 'none';
-        startBtn.style.backgroundColor; 
-        startGame();
-    });
-    modalTextbox.appendChild(playAgain);
 }
-
 //removes correct/incorrect notes from score modal
 function removeScores () {
    for (let i = 0; i < correctNotes.length; i++) {
