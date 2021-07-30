@@ -320,6 +320,7 @@ function addNoteSpread () {
         resultsIncorrect.appendChild(newNote);
     }
 }
+
 //removes correct/incorrect notes from score modal
 function removeScores () {
    for (let i = 0; i < correctNotes.length; i++) {
