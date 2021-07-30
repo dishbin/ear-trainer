@@ -39,6 +39,31 @@ infiniteButton.addEventListener('click', function () {
 });
 header.appendChild(infiniteButton);
 
+let difficultyButton = document.createElement('button');
+difficultyButton.classList.add('difficulty-button');
+difficultyButton.classList.add('easy');
+difficultyButton.innerHTML = 'easy';
+difficultyButton.addEventListener('click', function () {
+    if (difficultyButton.classList.value.includes('easy')) {
+        difficultyButton.classList.remove('easy');
+        difficultyButton.classList.add('medium');
+        difficultyButton.innerHTML = 'medium';
+    } else if (difficultyButton.classList.value.includes('medium')) {
+        difficultyButton.classList.remove('medium');
+        difficultyButton.classList.add('hard');
+        difficultyButton.innerHTML = 'hard';
+    } else if (difficultyButton.classList.value.includes('hard')) {
+        difficultyButton.classList.remove('hard');
+        difficultyButton.classList.add('easy');
+        difficultyButton.innerHTML = 'easy';
+    }
+});
+header.appendChild(difficultyButton);
+
+
+
+
+
 //create main buttons
 let startBtn = document.createElement('button');
 startBtn.innerHTML = 'begin training';
@@ -81,6 +106,23 @@ let octaveThree = {
     Asharp: 233.08,
     B: 246.94
 }
+
+let octaveFour = {
+    C: 130.81,
+    Csharp: 138.59,
+    D: 146.83,
+    Dsharp: 155.56,
+    E: 164.81,
+    F: 174.61,
+    Fsharp: 185.00,
+    G: 196.00,
+    Gsharp: 207.65,
+    A: 220.00,
+    Asharp: 233.08,
+    B: 246.94
+}
+
+
 
 let noteIndex = 0;
 let infiniteNoteCount = 0;
@@ -151,6 +193,20 @@ function populateRoundValues () {
     for (let i = 0; i < buttonSelects.children.length; i++) {
         generateAndCheckRoundValues();
     };
+}
+
+//creates a round value and checks to see if 
+//it has already been added to this round
+//to make sure that each note is only in the round once
+function generateAndCheckRoundValues () {
+    let randVal = Math.floor(Math.random() * buttonSelects.children.length);
+    let randNote = buttonSelects.children[randVal].id;
+    if (!(noteValues.includes(randNote))) {
+        noteValues.push(randNote);
+        roundValues.push(Object.values(octaveThree)[randVal]);
+    } else {
+        generateAndCheckRoundValues();
+    }
 }
 
 //is called upon game completion
@@ -234,20 +290,6 @@ function removeScores () {
     for (let i = 0; i < incorrectNotes.length; i++) {
         resultsIncorrect.removeChild(resultsIncorrect.lastChild); 
     } 
-}
-
-//creates a round value and checks to see if 
-//it has already been added to this round
-//to make sure that each note is only in the round once
-function generateAndCheckRoundValues () {
-    let randVal = Math.floor(Math.random() * buttonSelects.children.length);
-    let randNote = buttonSelects.children[randVal].id;
-    if (!(noteValues.includes(randNote))) {
-        noteValues.push(randNote);
-        roundValues.push(Object.values(octaveThree)[randVal]);
-    } else {
-        generateAndCheckRoundValues();
-    }
 }
 
 function infiniteMode () {

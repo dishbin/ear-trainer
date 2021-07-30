@@ -20,6 +20,29 @@ h1 {
     box-shadow: 0px 5px 10px black 
 }
 
+.difficulty-button {
+    margin: 0em 1em;
+    margin-top: 1em; 
+    width: 80px;
+    height: 50px;
+    font-size: large;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.easy {
+    background-color: rgb(153, 255, 153);
+}
+
+.medium { 
+    background-color: rgb(250, 250, 134);
+}
+
+.hard {
+    background-color: rgb(255, 82, 82)
+}
+
 .infinite-button {
     margin-top: 1em;
     width: 50px;
@@ -62,7 +85,7 @@ h1 {
 }
 
 .start-button-red {
-    background-color: red;
+    background-color: rgb(255, 82, 82);
 }
 
 .replay-button {
