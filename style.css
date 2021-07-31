@@ -189,6 +189,7 @@ h1 {
 .notes-radio-column {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
 }
 
 #close-modal {
