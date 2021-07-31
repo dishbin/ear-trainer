@@ -297,6 +297,7 @@ h1 {
 
     .button-selects {
         margin: 1em auto;
+        width: 300px;
         padding: 5px;
         text-align: center;
         margin-bottom: 0px;
@@ -325,5 +326,11 @@ h1 {
 
     .playing-note {
         background-color: rgb(153, 255, 153);
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .button-selects {
+        width: 300px;
     }
 }
