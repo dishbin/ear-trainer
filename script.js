@@ -10,6 +10,10 @@ const resultSpread = document.querySelector('#result-spread');
 const modalScore = document.querySelector('#modal-score');
 const resultsCorrect = document.querySelector('#correct-notes');
 const resultsIncorrect = document.querySelector('#incorrect-notes');
+const notesModal = document.querySelector('#notes-modal');
+const notesModalTextbox = document.querySelector('#notes-modal-textbox');
+const closeNotesModal = document.querySelector('#close-modal');
+const notesToInclude = document.querySelectorAll('.include-notes');
 
 //create tone genereator
 let AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -88,11 +92,25 @@ let incorrectNotes = [];
 //boolean for knowing if infinite mode is activated or not
 let infiniteModeToggle = false;
 
+//keeps track of shown notes
+let shownNotes = 12;
+let shownNotesValues = [];
+let shownNotesButtons = [];
+
 
 //create header
 let heading = document.createElement('h1');
 heading.innerHTML = 'semi-tone ear trainer';
 header.appendChild(heading);
+
+////create, style, and activate notes button
+let notesButton = document.createElement('button');
+notesButton.innerHTML = 'notes';
+notesButton.classList.add('notes-button');
+notesButton.addEventListener('click', function () {
+    displayNotesModal();
+})
+header.appendChild(notesButton);
 
 //create, style, and activate infinite mode button
 let infiniteButton = document.createElement('button');
@@ -106,7 +124,7 @@ infiniteButton.addEventListener('click', function () {
         infiniteMode();
     } else {
         infiniteButton.classList.remove('infinite-button-active');
-        noteButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
+        shownNotesButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
         infiniteModeToggle = false;
         infiniteButton.innerHTML = '<span>&#8734;</span>';
         startBtn.disabled = false;
@@ -160,9 +178,11 @@ replayBtn.disabled = true;
 let noteButtons = [...buttonSelects.children];
 noteButtons.forEach(button => button.classList.add('note-button'))
 
+getShownNoteValues();
+
 //starts a normal round
 function startGame () { 
-    noteButtons.forEach(button => button.addEventListener('click', getNote));
+    shownNotesButtons.forEach(button => button.addEventListener('click', getNote));
     replayBtn.disabled = false;
     noteIndex = 0;
     correctNotes = [];
@@ -188,7 +208,7 @@ function getNote () {
         correctNotes.push(answer) :
         incorrectNotes.push(noteValues[noteIndex]);
     noteIndex++;
-    if (noteIndex < 12) {
+    if (noteIndex < shownNotes) {
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000)
@@ -215,17 +235,24 @@ function playCurrentNote () {
 function populateRoundValues () {
     roundValues = [];
     noteValues = [];
-    for (let i = 0; i < buttonSelects.children.length; i++) {
+    shownNotesValues = [];
+    getShownNoteValues();
+    for (let i = 0; i < shownNotes; i++) {
         generateAndCheckRoundValues();
     };
+    console.log(noteValues);
+    console.log(roundValues);
 }
 
 //creates a round value and checks to see if 
 //it has already been added to this round
 //to make sure that each note is only in the round once
 function generateAndCheckRoundValues () {
-    let randVal = Math.floor(Math.random() * buttonSelects.children.length);
-    let randNote = buttonSelects.children[randVal].id;
+    // console.log(shownNotesValues.length);
+    let randVal = Math.floor(Math.random() * shownNotesValues.length);
+    // console.log(randVal);
+    let randNote = shownNotesValues[randVal];
+    // console.log(randNote);
     if (!(noteValues.includes(randNote))) {
         noteValues.push(randNote);
         if (difficultyButton.classList.value.includes('easy')) {
@@ -277,28 +304,28 @@ function displayModal () {
 //gets and prepares score for display
 function getScore () {
     //get score
-    let percentCorrect = parseInt((correctNotes.length / 12) * 100);
+    let percentCorrect = parseInt((correctNotes.length / shownNotes) * 100);
     //choose header adn percent color based on score; display results
     if (percentCorrect < 25) {
-        resultPercent.style.color = 'red';
+        resultPercent.style.color = 'rgb(255, 82, 82)';
         resultHeader.innerHTML = 'yikes!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
-        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
     } else if (percentCorrect >= 25 && percentCorrect < 50) {
         resultPercent.style.color = 'black';
         resultHeader.innerHTML = 'good try!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
-        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
     } else if (percentCorrect >= 50 && percentCorrect < 75) {
         resultPercent.style.color = 'black';
         resultHeader.innerHTML = 'well done!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
-        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
     } else if (percentCorrect >= 75) {
-        resultPercent.style.color = rgb(153, 255, 153);
+        resultPercent.style.color = 'rgb(153, 255, 153)';
         resultHeader.innerHTML = 'wow!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
-        resultSpread.innerHTML = `you got ${correctNotes.length} out of 12 notes correct`
+        resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
     }
 }
 
@@ -335,12 +362,11 @@ function removeScores () {
 
 //starts game in infinite mode
 function infiniteMode () {
-    noteButtons.forEach(button => button.removeEventListener('click', getNote));
-    noteButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
+    shownNotesButtons.forEach(button => button.removeEventListener('click', getNote));
+    shownNotesButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
     replayBtn.disabled = false;
     noteIndex = 0;
     populateRoundValues();
-    console.log(roundValues);
     startBtn.innerHTML = "";
     startBtn.disabled = true;
     window.setTimeout(() => {
@@ -358,11 +384,43 @@ function getInfintiteNote () {
     let infinitePercent = parseInt((correctNotes.length / infiniteNoteCount) * 100);
     infiniteButton.innerHTML = `${infinitePercent}%`;
     noteIndex++;
-    if (noteIndex < 12) {
+    if (noteIndex < shownNotes) {
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000)
     } else {
         infiniteMode();
     }   
+}
+
+function displayNotesModal () {
+    notesModal.style.display = 'block';
+    notesModalTextbox.style.display = 'block';
+    closeNotesModal.addEventListener('click', function () {
+        notesModal.style.display = 'none';
+        notesModalTextbox.style.display = 'none';
+        getShownNoteValues();
+        startBtn.disabled = false;
+        startBtn.innerHTML = "begin training";
+        
+    });
+}
+
+function getShownNoteValues () {
+    shownNotes = 0;
+    shownNotesValues = [];
+    shownNotesButtons = [];
+    notesToInclude.forEach(note => {
+        if (note.checked !== true) {
+            let removeNoteButton = document.getElementById(note.value);
+            removeNoteButton.style.display = 'none';
+
+        } else {
+            let addNoteButton = document.getElementById(note.value);
+            addNoteButton.style.display = 'inline';
+            shownNotes++;
+            shownNotesValues.push(addNoteButton.id);
+            shownNotesButtons.push(addNoteButton);
+        }
+    })
 }

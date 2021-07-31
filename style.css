@@ -43,6 +43,17 @@ h1 {
     background-color: rgb(255, 82, 82)
 }
 
+.notes-button {
+    margin: 0px 1em;
+    margin-top: 1em;
+    width: 50px;
+    height: 50px;
+    font-size: medium;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
 .infinite-button {
     margin-top: 1em;
     width: 50px;
@@ -139,6 +150,54 @@ h1 {
 .playing-note {
     background-color: rgb(153, 255, 153);
 }
+
+#notes-modal {
+	background-color: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+    display: none;
+}
+
+#notes-modal-textbox {
+	background-color: blanchedalmond;
+	height: auto;
+	width: 300px;
+	border-radius: 15px;
+    margin: 150px auto;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    padding: 1em;
+}
+
+.notes-modal-header {
+    padding-top: 0.25em;
+    padding-bottom: 1em;
+}
+
+#notes-radio-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.notes-radio-column {
+    display: flex;
+    flex-direction: column;
+}
+
+#close-modal {
+    margin: 2em auto;
+    width: 50px;
+    height: 50px;
+}
+
+
 
 #modal {
 	background-color: rgba(0,0,0,0.4);
@@ -313,6 +372,17 @@ h1 {
     }
 
     #modal-textbox {
+        background-color: blanchedalmond;
+        height: 475px;
+        width: 300px;
+        border-radius: 15px;
+        margin: 3em auto;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        display: none;
+        text-align: center;
+    }
+
+    #notes-modal-textbox {
         background-color: blanchedalmond;
         height: 475px;
         width: 300px;
