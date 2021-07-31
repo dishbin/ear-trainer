@@ -93,10 +93,12 @@ let incorrectNotes = [];
 let infiniteModeToggle = false;
 
 //keeps track of shown notes
+//default set to 12 (all notes)
 let shownNotes = 12;
+//stores shown note values generated each round
 let shownNotesValues = [];
+//stores shown note buttons for easy access
 let shownNotesButtons = [];
-
 
 //create header
 let heading = document.createElement('h1');
@@ -107,6 +109,7 @@ header.appendChild(heading);
 let notesButton = document.createElement('button');
 notesButton.innerHTML = 'notes';
 notesButton.classList.add('notes-button');
+//when notes button is pressed --> display select notes modal
 notesButton.addEventListener('click', function () {
     displayNotesModal();
 })
@@ -116,19 +119,33 @@ header.appendChild(notesButton);
 let infiniteButton = document.createElement('button');
 infiniteButton.innerHTML = '<span>&#8734;</span>';
 infiniteButton.classList.add('infinite-button');
+//when infinite mode button is clicked...
 infiniteButton.addEventListener('click', function () {
+    //if infinite mode is NOT on
     if (infiniteModeToggle === false) {
+        //display current score in infinite mode button text
         infiniteButton.innerHTML = '--%'
+        //change background color to yellow to show that notes mode is activated
         infiniteButton.classList.add('infinite-button-active');
+        //set the infinite mode toggle to TRUE
         infiniteModeToggle = true;
+        //run infinite mode
         infiniteMode();
+    //if infinite mode is already on
     } else {
+        //remove yellow background
         infiniteButton.classList.remove('infinite-button-active');
+        //remove getInfiniteNote click listener from each button
         shownNotesButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
+        //set infinite mode toggle to FALSE
         infiniteModeToggle = false;
+        //change infinite mode button text back to infinity symbol
         infiniteButton.innerHTML = '<span>&#8734;</span>';
+        //enable start button
         startBtn.disabled = false;
+        //change start button text back to default
         startBtn.innerHTML = 'begin training';
+        //re-style start button to default 
         startBtn.classList.add('start-button');
     }
 });
@@ -139,21 +156,37 @@ let difficultyButton = document.createElement('button');
 difficultyButton.classList.add('difficulty-button');
 difficultyButton.classList.add('easy');
 difficultyButton.innerHTML = 'easy';
+//when difficulty button is clicked...
 difficultyButton.addEventListener('click', function () {
+    //enable start button
     startBtn.disabled = false;
+    //reset start button text to default
     startBtn.innerHTML = 'begin training';
+    //re-style start button to default 
     startBtn.classList.add('start-button');
+    //if difficulty is already set to easy
     if (difficultyButton.classList.value.includes('easy')) {
+        //remove easy styling
         difficultyButton.classList.remove('easy');
+        //add medium styling
         difficultyButton.classList.add('medium');
+        //change text to medium
         difficultyButton.innerHTML = 'medium';
+    //if difficulty is already set to medium
     } else if (difficultyButton.classList.value.includes('medium')) {
+        //remove medium styling
         difficultyButton.classList.remove('medium');
+         //add hard styling
         difficultyButton.classList.add('hard');
+        //change text to hard
         difficultyButton.innerHTML = 'hard';
+    //if difficulty is already set to hard
     } else if (difficultyButton.classList.value.includes('hard')) {
+        //remove hard styling
         difficultyButton.classList.remove('hard');
+        //add easy styling
         difficultyButton.classList.add('easy');
+        //change text to easy
         difficultyButton.innerHTML = 'easy';
     }
 });
@@ -178,18 +211,27 @@ replayBtn.disabled = true;
 let noteButtons = [...buttonSelects.children];
 noteButtons.forEach(button => button.classList.add('note-button'))
 
+//gets default shown note values (all)
 getShownNoteValues();
 
 //starts a normal round
 function startGame () { 
+    //give each shown note button a click listener that calls getNote
     shownNotesButtons.forEach(button => button.addEventListener('click', getNote));
+    //enable replay current tone button
     replayBtn.disabled = false;
+    //set note index to 0
     noteIndex = 0;
+    //empty the correct and incorrect note arrays
     correctNotes = [];
     incorrectNotes = [];
+    //get round values
     populateRoundValues();
+    //remove start button text
     startBtn.innerHTML = "";
+    //disable start button
     startBtn.disabled = true;
+    //play first note after 1 second
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000)
@@ -203,41 +245,64 @@ function replayTone () {
 //logs the user choice, triggers next note and 
 //checks for score after each click
 function getNote () {
+    //create local variable that equals the value of the button pressed
     let answer = this.value;
+    //if answer is equal to the value of the current note
     (answer === noteValues[noteIndex]) ?
+        //push the answer into the correct notes arr
         correctNotes.push(answer) :
+        //else push the correct answer into the incorrect notes arr
         incorrectNotes.push(noteValues[noteIndex]);
+    //increment note index
     noteIndex++;
+    //if the round isn't over
     if (noteIndex < shownNotes) {
-    window.setTimeout(() => {
-        playCurrentNote();
-    }, 1000)
+        //play the next note
+        window.setTimeout(() => {
+            playCurrentNote();
+        }, 1000)
+    //else...
     } else {
+        //display score modal
         displayModal();
+        //make start button red
         startBtn.classList.add('star-button-red');
     }   
 }
 
 //plays current note in noteValues index
 function playCurrentNote () {
+    //make start button green to show audio playing
     startBtn.classList.add('playing-note');
+    //create oscillator
     const oscillator = context.createOscillator();
+    //set oscillator frequency to the current notes frequency
     oscillator.frequency.setValueAtTime(roundValues[noteIndex], 0);
+    //connect oscillator to master vol
     oscillator.connect(masterVolume);
+    //start the oscillator
     oscillator.start();
+    //stop the oscillator after 1 sec
     oscillator.stop(context.currentTime + 1);
+    //after the note stops playing...
     window.setTimeout (() => {
+        //change start button color back to default
         startBtn.classList.remove('playing-note');
     }, context.currentTime + 1000)
 }
 
 //set note values for each round
 function populateRoundValues () {
+    //empty round and note value arrays
     roundValues = [];
     noteValues = [];
+    //remove shown notes values
     shownNotesValues = [];
+    //repopulate shown notes values arrays
     getShownNoteValues();
+    //for every shown note...
     for (let i = 0; i < shownNotes; i++) {
+        //generate a round value
         generateAndCheckRoundValues();
     };
     
@@ -247,26 +312,48 @@ function populateRoundValues () {
 //it has already been added to this round
 //to make sure that each note is only in the round once
 function generateAndCheckRoundValues () {
+    //gets a random number from 0 to the amount of shown notes - 1
     let randVal = Math.floor(Math.random() * shownNotesValues.length);
+    //uses that random number to select a note value from the shown notes
     let randNote = shownNotesValues[randVal];
+    //if current note values does NOT contain the random note
     if (!(noteValues.includes(randNote))) {
+        //push the random note into note values
         noteValues.push(randNote);
+        //if difficulty is set to EASY
         if (difficultyButton.classList.value.includes('easy')) {
+            //push the frequency of the random note grabbed from the easy octave
             roundValues.push(Object.values(easyOctave)[randVal]);
+        //else if difficulty is set to MEDIUM
         } else if (difficultyButton.classList.value.includes('medium')) {
+            //create a local variable that is either a 0 or a 1
             let mediumModifier = Math.floor(Math.random() * 2);
+            //if medium modifier is equal to 0
             (mediumModifier === 0) ? 
+                //push the frequency of the random note grabbed from the easy octave
                 roundValues.push(Object.values(easyOctave)[randVal]) :
-                roundValues.push(Object.values(mediumOctave)[randVal]) ;
+                //if medium modifier is equal to 1
+                //push the frequency of the random note grabbed from the medium octave
+                roundValues.push(Object.values(mediumOctave)[randVal]);
+        //if difficulty is set to HARD
         } else if (difficultyButton.classList.value.includes('hard')) {
+            //create a local variable that is either a 0, 1, or a 2
             let hardModifier = Math.floor(Math.random() * 3);
+            //if hard modifier is equal to 0
             (hardModifier === 0) ? 
+                //push the frequency of the random note grabbed from the easy octave
                 roundValues.push(Object.values(easyOctave)[randVal]) :
+                //else if hard modifier is equal to 1 
                 (hardModifier === 1) ?
+                    //push the frequency of the random note grabbed from the medium octave
                     roundValues.push(Object.values(mediumOctave)[randVal]) :
-                    roundValues.push(Object.values(hardOctave)[randVal]) ;
+                    //else if medium modifier is equal to 2
+                    //push the frequency of the random note grabbed from the hard octave
+                    roundValues.push(Object.values(hardOctave)[randVal]);
         }
+    //if current note values already contains the random note
     } else {
+        //generate a new random note to ensure every note is in each round
         generateAndCheckRoundValues();
     }
 }
@@ -284,16 +371,22 @@ function displayModal () {
     let playAgain = document.createElement('button');
     playAgain.innerHTML = 'play again?';
     playAgain.classList.add('play-again');
+    //when play again button is clicked...
     playAgain.addEventListener('click', function () {
+        //call remove scores
         removeScores();
+        //emoty the correct/incorrect notes array
         correctNotes = [];
         incorrectNotes = [];
+        //remove play again button from modal
         modalTextbox.removeChild(playAgain);
+        //remove modal from display
         modalShade.style.display = 'none';
         modalTextbox.style.display = 'none';
-        startBtn.style.backgroundColor; 
+        //start a new game
         startGame();
     });
+    //add play agai button to score modal
     modalTextbox.appendChild(playAgain);
 }
 
@@ -302,21 +395,25 @@ function getScore () {
     //get score
     let percentCorrect = parseInt((correctNotes.length / shownNotes) * 100);
     //choose header adn percent color based on score; display results
+    //if score is less than 25...
     if (percentCorrect < 25) {
         resultPercent.style.color = 'rgb(255, 82, 82)';
         resultHeader.innerHTML = 'yikes!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
         resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
+    //if score is between 25 and 49...
     } else if (percentCorrect >= 25 && percentCorrect < 50) {
         resultPercent.style.color = 'black';
         resultHeader.innerHTML = 'good try!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
         resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
+    //if score is between 50 and 74...
     } else if (percentCorrect >= 50 && percentCorrect < 75) {
         resultPercent.style.color = 'black';
         resultHeader.innerHTML = 'well done!!';
         resultPercent.innerHTML = `${percentCorrect}%`;
         resultSpread.innerHTML = `you got ${correctNotes.length} out of ${shownNotes} notes correct`
+    //if score is 75 or greater
     } else if (percentCorrect >= 75) {
         resultPercent.style.color = 'rgb(153, 255, 153)';
         resultHeader.innerHTML = 'wow!!';
@@ -358,64 +455,103 @@ function removeScores () {
 
 //starts game in infinite mode
 function infiniteMode () {
+    //remove get note click listener from each shown button
     shownNotesButtons.forEach(button => button.removeEventListener('click', getNote));
+    //add get infinite note click listener to each shown button
     shownNotesButtons.forEach(button => button.addEventListener('click', getInfintiteNote));
+    //enable replay current tone button
     replayBtn.disabled = false;
+    //set note index to 0
     noteIndex = 0;
+    //get values for the round
     populateRoundValues();
+    //remove start button text
     startBtn.innerHTML = "";
+    //disable start button
     startBtn.disabled = true;
+    //wait 1 second then play the current note
     window.setTimeout(() => {
         playCurrentNote();
     }, 1000);
 }
 
 //get note function but for infinite mode
+//on note button click
 function getInfintiteNote () {
+    //increment infinite note count
     infiniteNoteCount++;
+    //create local variable that stores the value of the note button that was clicked
     let answer = this.value;
+    //if the value of answer is equal to the current notes value
     (answer === noteValues[noteIndex]) ?
+        //push note into correct notes array
         correctNotes.push(answer) :
+        //else push note into incorrect notes arr
         incorrectNotes.push(noteValues[noteIndex]);
+    //create a local variable thats equal to the percentage of correct notes out of total infinite mode notes
     let infinitePercent = parseInt((correctNotes.length / infiniteNoteCount) * 100);
+    //set text of infinite button to the percent correct
     infiniteButton.innerHTML = `${infinitePercent}%`;
+    //increment the noteIndex for the current round
     noteIndex++;
+    //if note index is less than the rounds note values length
     if (noteIndex < shownNotes) {
-    window.setTimeout(() => {
-        playCurrentNote();
-    }, 1000)
+        //play next note after 1 second
+        window.setTimeout(() => {
+            playCurrentNote();
+        }, 1000)
+    //if note the round ends
     } else {
+        //start new infinite mode round
         infiniteMode();
     }   
 }
 
+//displays a menu to choose which notes to show
 function displayNotesModal () {
+    //display notes modal
     notesModal.style.display = 'block';
     notesModalTextbox.style.display = 'block';
+    //when close notes modal button is pressed...
     closeNotesModal.addEventListener('click', function () {
+        //remove notes modal from display
         notesModal.style.display = 'none';
         notesModalTextbox.style.display = 'none';
+        //get shown note values
         getShownNoteValues();
+        //enable start button
         startBtn.disabled = false;
+        //reset start button text to default
         startBtn.innerHTML = "begin training";
         
     });
 }
 
+//gets shown note values when select notes modal is closed
 function getShownNoteValues () {
+    //sets shown notes to 0
     shownNotes = 0;
+    //empties shown notes values and buttons arrays
     shownNotesValues = [];
     shownNotesButtons = [];
+    //for each note button
     notesToInclude.forEach(note => {
+        //if the note checkbox is not checked
         if (note.checked !== true) {
+            //get the button element that corresponds to the unchecked note
             let removeNoteButton = document.getElementById(note.value);
+            //remove that button from the display
             removeNoteButton.style.display = 'none';
-
+        //if the note checkbox remains checked
         } else {
+            //display that button
             let addNoteButton = document.getElementById(note.value);
             addNoteButton.style.display = 'inline';
+            //increment the shown notes count
             shownNotes++;
+            //push the note value into the shown notes array
             shownNotesValues.push(addNoteButton.id);
+            //push the button element into the shown notes buttons array
             shownNotesButtons.push(addNoteButton);
         }
     })
