@@ -240,19 +240,15 @@ function populateRoundValues () {
     for (let i = 0; i < shownNotes; i++) {
         generateAndCheckRoundValues();
     };
-    console.log(noteValues);
-    console.log(roundValues);
+    
 }
 
 //creates a round value and checks to see if 
 //it has already been added to this round
 //to make sure that each note is only in the round once
 function generateAndCheckRoundValues () {
-    // console.log(shownNotesValues.length);
     let randVal = Math.floor(Math.random() * shownNotesValues.length);
-    // console.log(randVal);
     let randNote = shownNotesValues[randVal];
-    // console.log(randNote);
     if (!(noteValues.includes(randNote))) {
         noteValues.push(randNote);
         if (difficultyButton.classList.value.includes('easy')) {
