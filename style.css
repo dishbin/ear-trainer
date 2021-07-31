@@ -232,7 +232,7 @@ h1 {
 @media only screen and (max-width: 420px) {
 
     .header {
-        margin: auto;
+        margin: 0px auto;
         margin-top: 0.5em;
     }
 
@@ -240,7 +240,7 @@ h1 {
         font-size: x-large;
         margin: auto;
         background-color: rgba(0, 0, 0, 0.4);
-        width: 75vw;
+        width: 250px;
         height: 2em;
         padding: 0.5em 1em;
         padding-top: 1.5em;
@@ -264,7 +264,7 @@ h1 {
     }
 
     .main {
-        margin: auto;
+        margin:  0px auto;
         margin-top: 3em;
         text-align: center;
         display: flex;
@@ -275,7 +275,7 @@ h1 {
         width: 125px;
         height: 50px;
         margin: 10px auto;
-        margin-top: 1em;
+        margin-top: 0px;
 
         font-size: large;
         border-radius: 5px;
@@ -288,6 +288,7 @@ h1 {
         width: 125px;
         height: 50px;
         margin: auto;
+        margin-bottom: 0px;
 
         font-size: large;
         border-radius: 5px;
@@ -297,15 +298,15 @@ h1 {
     }
 
     .button-selects {
-        margin: 3em auto;
+        margin: 1em auto;
         padding: 5px;
         text-align: center;
         margin-bottom: 0px;
     }
 
     .note-button {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
         margin: 5px;
         border-radius: 5px;
         border: none;
