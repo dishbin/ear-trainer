@@ -398,7 +398,7 @@ h1 {
 
     #notes-modal-textbox {
         background-color: blanchedalmond;
-        height: 475px;
+        height: auto;
         width: 300px;
         border-radius: 15px;
         margin: 3em auto;
