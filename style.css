@@ -314,7 +314,7 @@ h1 {
         border-radius: 5px;
         border: none;
         box-shadow: 0px 3px 5px black;
-        background-color: lightgray;
+        background-color: #FCFCFC;
     }
 
     .infinite-button-active {
@@ -338,7 +338,7 @@ h1 {
         border-radius: 5px;
         border: none;
         box-shadow: 0px 3px 5px black;
-        background-color: lightgray;
+        background-color: #FCFCFC;
     }
 
     .start-button {
