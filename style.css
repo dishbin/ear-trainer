@@ -23,7 +23,7 @@ h1 {
 .difficulty-button {
     margin: 0em 1em;
     margin-top: 1em; 
-    width: 80px;
+    width: 75px;
     height: 50px;
     font-size: medium;
     text-align: center;
@@ -47,7 +47,7 @@ h1 {
 .notes-button {
     margin: 0px 1em;
     margin-top: 1em;
-    width: 50px;
+    width: 75px;
     height: 50px;
     font-size: medium;
     border-radius: 5px;
@@ -57,7 +57,7 @@ h1 {
 
 .infinite-button {
     margin-top: 1em;
-    width: 50px;
+    width: 75px;
     height: 50px;
     font-size: large;
     border-radius: 5px;
@@ -309,7 +309,7 @@ h1 {
 
     .infinite-button {
         margin-top: 2em;
-        width: 50px;
+        width: 75px;
         height: 50px;
         font-size: large;
         border-radius: 5px;
@@ -333,9 +333,9 @@ h1 {
     .notes-button {
         margin: 0px 1em;
         margin-top: 1em;
-        width: 50px;
+        width: 75px;
         height: 50px;
-        font-size: x-small;
+        font-size: small;
         text-align: center;
         border-radius: 5px;
         border: none;
