@@ -232,8 +232,8 @@ h1 {
 @media only screen and (max-width: 420px) {
 
     .header {
-        margin-top: 0.5em;
         width: 90vw;
+        margin: 0px auto;
     }
 
     .header h1 {
