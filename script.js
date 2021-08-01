@@ -166,6 +166,8 @@ chordButton.addEventListener('click', function () {
         chordButton.innerHTML = 'major'
         //enable chord mode
         chordModeToggle = true;
+        //style chord button
+        chordButton.classList.add('chord-button-active');
         
     //if chord mode is set to major
     } else if (chordButton.innerHTML === 'major') {
@@ -183,6 +185,8 @@ chordButton.addEventListener('click', function () {
         chordButton.innerHTML = 'chords'
         //disable chord mode
         chordModeToggle = false;
+        //re-style chord button
+        chordButton.classList.remove('chord-button-active');
     }
 });
 header.appendChild(chordButton);
@@ -232,6 +236,9 @@ difficultyButton.innerHTML = 'easy';
 difficultyButton.addEventListener('click', function () {
     //disable chord mode
     chordModeToggle = false;
+    //change chord button styling
+    chordButton.innerHTML = 'chords';
+    chordButton.classList.remove('chord-button-active');
     //enable start button
     startBtn.disabled = false;
     //reset start button text to default
