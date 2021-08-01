@@ -39,7 +39,7 @@ let easyOctave = {
     
 }
 
-//adds these notes available notes in medium mode
+//adds these notes to available notes in medium mode
 //Fsharp2 to B2 && C5 to F5
 let mediumOctave = {
     C: 523.25,
@@ -57,7 +57,7 @@ let mediumOctave = {
     
 }
 
-//adds these notes available notes in hard mode
+//adds these notes to available notes in hard mode
 //C2 to F2 && Fsharp5 to B5
 let hardOctave = {
     C: 130.81,
@@ -89,6 +89,36 @@ let majorChords = {
     B: [493.88, 622.25, 739.99],
 }
 
+let majorChords1stInversion = {
+    C: [523.25, 329.63, 392.00],
+    Csharp: [554.37, 349.23, 415.30],
+    D: [587.33, 369.99, 440.00],
+    Dsharp: [622.25, 392.00, 466.16],
+    E: [659.25, 415.30, 493.88],
+    F: [698.46, 440.00, 523.25],
+    Fsharp: [739.99, 466.16, 554.37],
+    G: [783.99, 493.88, 587.33],
+    Gsharp: [830.61, 523.25, 622.25],
+    A: [880.00, 554.37, 659.25],
+    Asharp: [932.33, 587.33, 698.46],
+    B: [987.77, 622.25, 739.99],
+}
+
+let majorChords2ndInversion = {
+    C: [261.63, 329.63, 196.00],
+    Csharp: [277.18, 349.23, 207.65],
+    D: [293.66, 369.99, 220.00],
+    Dsharp: [311.13, 392.00, 233.08],
+    E: [329.63, 415.30, 246.94],
+    F: [349.23, 440.00, 261.63],
+    Fsharp: [369.99, 466.16, 277.18],
+    G: [392.00, 493.88, 293.66],
+    Gsharp: [415.30, 523.25, 311.13],
+    A: [440.00, 554.37, 329.63],
+    Asharp: [466.16, 587.33, 349.23],
+    B: [493.88, 622.25, 369.99],
+}
+
 let minorChords = {
     C: [261.63, 311.13, 392.00],
     Csharp: [277.18, 329.63, 415.30],
@@ -102,6 +132,36 @@ let minorChords = {
     A: [440.00, 523.25, 659.25],
     Asharp: [466.16, 554.37, 698.46],
     B: [493.88, 587.33, 739.99],
+}
+
+let minorChords1stInversion = {
+    C: [523.25, 311.13, 392.00],
+    Csharp: [554.37, 329.63, 415.30],
+    D: [587.33, 349.23, 440.00],
+    Dsharp: [622.25, 369.99, 466.16],
+    E: [659.25, 392.00, 493.88],
+    F: [698.46, 415.30, 523.25],
+    Fsharp: [739.99, 440.00, 554.37],
+    G: [783.99, 466.16, 587.33],
+    Gsharp: [830.61, 493.88, 622.25],
+    A: [880.00, 523.25, 659.25],
+    Asharp: [932.33, 554.37, 698.46],
+    B: [987.77, 587.33, 739.99],
+}
+
+let minorChords2ndInversion = {
+    C: [261.63, 311.13, 196.00],
+    Csharp: [277.18, 329.63, 207.65],
+    D: [293.66, 349.23, 220.00],
+    Dsharp: [311.13, 369.99, 233.08],
+    E: [329.63, 392.00, 246.94],
+    F: [349.23, 415.30, 261.63],
+    Fsharp: [369.99, 440.00, 277.18],
+    G: [392.00, 466.16, 293.66],
+    Gsharp: [415.30, 493.88, 311.13],
+    A: [440.00, 523.25, 329.63],
+    Asharp: [466.16, 554.37, 349.23],
+    B: [493.88, 587.33, 369.99],
 }
 
 //keeps track of current note in round
@@ -152,7 +212,7 @@ header.appendChild(notesButton);
 let chordButton = document.createElement('button');
 chordButton.classList.add('chord-button');
 chordButton.innerHTML = 'chords';
-//when difficulty button is clicked...
+//when chord button is clicked...
 chordButton.addEventListener('click', function () {
     //enable start button
     startBtn.disabled = false;
@@ -234,11 +294,6 @@ difficultyButton.classList.add('easy');
 difficultyButton.innerHTML = 'easy';
 //when difficulty button is clicked...
 difficultyButton.addEventListener('click', function () {
-    //disable chord mode
-    chordModeToggle = false;
-    //change chord button styling
-    chordButton.innerHTML = 'chords';
-    chordButton.classList.remove('chord-button-active');
     //enable start button
     startBtn.disabled = false;
     //reset start button text to default
@@ -395,14 +450,88 @@ function playCurrentChord () {
     //get chord values of root note
     let chordValues = [];
     if (chordButton.innerHTML === 'major') {
-        chordValues = Object.values(majorChords)[rootNoteIndex]; 
+        if (difficultyButton.classList.value.includes('easy')) {
+            chordValues = Object.values(majorChords)[rootNoteIndex];
+        } else if (difficultyButton.classList.value.includes('medium')) {
+            //create a local variable that is either a 0 or a 1
+            let mediumModifier = Math.floor(Math.random() * 2);
+                 //if medium modifier is equal to 0
+                (mediumModifier === 0) ? 
+                    chordValues = Object.values(majorChords)[rootNoteIndex] :
+                    chordValues = Object.values(majorChords1stInversion)[rootNoteIndex];
+        } else if (difficultyButton.classList.value.includes('hard')) {
+            //create a local variable that is either a 0, 1, or a 2
+            let hardModifier = Math.floor(Math.random() * 3);
+            //if hard modifier is equal to 0
+            (hardModifier === 0) ? 
+                chordValues = Object.values(majorChords)[rootNoteIndex] :
+                (hardModifier === 1) ?
+                    chordValues = Object.values(majorChords1stInversion)[rootNoteIndex] :
+                    chordValues = Object.values(majorChords2ndInversion)[rootNoteIndex] ;
+        }   
     } else if (chordButton.innerHTML === 'minor') {
-        chordValues = Object.values(minorChords)[rootNoteIndex];
+        if (difficultyButton.classList.value.includes('easy')) {
+            chordValues = Object.values(minorChords)[rootNoteIndex];
+        } else if (difficultyButton.classList.value.includes('medium')) {
+            //create a local variable that is either a 0 or a 1
+            let mediumModifier = Math.floor(Math.random() * 2);
+                 //if medium modifier is equal to 0
+                (mediumModifier === 0) ? 
+                    chordValues = Object.values(minorChords)[rootNoteIndex] :
+                    chordValues = Object.values(minorChords1stInversion)[rootNoteIndex];
+        } else if (difficultyButton.classList.value.includes('hard')) {
+            //create a local variable that is either a 0, 1, or a 2
+            let hardModifier = Math.floor(Math.random() * 3);
+            //if hard modifier is equal to 0
+            (hardModifier === 0) ? 
+                chordValues = Object.values(minorChords)[rootNoteIndex] :
+                (hardModifier === 1) ?
+                    chordValues = Object.values(minorChords1stInversion)[rootNoteIndex] :
+                    chordValues = Object.values(minorChords2ndInversion)[rootNoteIndex] ;
+        }   
     } else if (chordButton.innerHTML === 'both') {
         let switchModifier = Math.floor(Math.random() * 2);
-        (switchModifier === 0) ?
-            chordValues = Object.values(majorChords)[rootNoteIndex] :
-            chordValues = Object.values(minorChords)[rootNoteIndex] ;
+        if (switchModifier === 0) {
+            if (difficultyButton.classList.value.includes('easy')) {
+                chordValues = Object.values(majorChords)[rootNoteIndex];
+            } else if (difficultyButton.classList.value.includes('medium')) {
+                //create a local variable that is either a 0 or a 1
+                let mediumModifier = Math.floor(Math.random() * 2);
+                     //if medium modifier is equal to 0
+                    (mediumModifier === 0) ? 
+                        chordValues = Object.values(majorChords)[rootNoteIndex] :
+                        chordValues = Object.values(majorChords1stInversion)[rootNoteIndex];
+            } else if (difficultyButton.classList.value.includes('hard')) {
+                //create a local variable that is either a 0, 1, or a 2
+                let hardModifier = Math.floor(Math.random() * 3);
+                //if hard modifier is equal to 0
+                (hardModifier === 0) ? 
+                    chordValues = Object.values(majorChords)[rootNoteIndex] :
+                    (hardModifier === 1) ?
+                        chordValues = Object.values(majorChords1stInversion)[rootNoteIndex] :
+                        chordValues = Object.values(majorChords2ndInversion)[rootNoteIndex] ;
+            }   
+        } else {
+            if (difficultyButton.classList.value.includes('easy')) {
+                chordValues = Object.values(minorChords)[rootNoteIndex];
+            } else if (difficultyButton.classList.value.includes('medium')) {
+                //create a local variable that is either a 0 or a 1
+                let mediumModifier = Math.floor(Math.random() * 2);
+                     //if medium modifier is equal to 0
+                    (mediumModifier === 0) ? 
+                        chordValues = Object.values(minorChords)[rootNoteIndex] :
+                        chordValues = Object.values(minorChords1stInversion)[rootNoteIndex];
+            } else if (difficultyButton.classList.value.includes('hard')) {
+                //create a local variable that is either a 0, 1, or a 2
+                let hardModifier = Math.floor(Math.random() * 3);
+                //if hard modifier is equal to 0
+                (hardModifier === 0) ? 
+                    chordValues = Object.values(minorChords)[rootNoteIndex] :
+                    (hardModifier === 1) ?
+                        chordValues = Object.values(minorChords1stInversion)[rootNoteIndex] :
+                        chordValues = Object.values(minorChords2ndInversion)[rootNoteIndex] ;
+            }   
+        }
     }
     //set oscillator frequency to the current notes frequency 
     oscillator.frequency.setValueAtTime((chordValues[0]), 0);
