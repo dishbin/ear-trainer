@@ -74,6 +74,36 @@ let hardOctave = {
     B: 987.77
 }
 
+let majorChords = {
+    C: [261.63, 329.63, 392.00],
+    Csharp: [277.18, 349.23, 415.30],
+    D: [293.66, 369.99, 440.00],
+    Dsharp: [311.13, 392.00, 466.16],
+    E: [329.63, 415.30, 493.88],
+    F: [349.23, 440.00, 523.25],
+    Fsharp: [369.99, 466.16, 554.37],
+    G: [392.00, 493.88, 587.33],
+    Gsharp: [415.30, 523.25, 622.25],
+    A: [440.00, 554.37, 659.25],
+    Asharp: [466.16, 587.33, 698.46],
+    B: [493.88, 622.25, 739.99],
+}
+
+let minorChords = {
+    C: [261.63, 311.13, 392.00],
+    Csharp: [277.18, 329.63, 415.30],
+    D: [293.66, 349.23, 440.00],
+    Dsharp: [311.13, 369.99, 466.16],
+    E: [329.63, 392.00, 493.88],
+    F: [349.23, 415.30, 523.25],
+    Fsharp: [369.99, 440.00, 554.37],
+    G: [392.00, 466.16, 587.33],
+    Gsharp: [415.30, 493.88, 622.25],
+    A: [440.00, 523.25, 659.25],
+    Asharp: [466.16, 554.37, 698.46],
+    B: [493.88, 587.33, 739.99],
+}
+
 //keeps track of current note in round
 let noteIndex = 0;
 //used for scoring in infinite mode
@@ -91,6 +121,9 @@ let incorrectNotes = [];
 
 //boolean for knowing if infinite mode is activated or not
 let infiniteModeToggle = false;
+
+//boolean for knowing if chord mode is activated or not
+let chordModeToggle = false;
 
 //keeps track of shown notes
 //default set to 12 (all notes)
@@ -114,6 +147,45 @@ notesButton.addEventListener('click', function () {
     displayNotesModal();
 })
 header.appendChild(notesButton);
+
+//create, style, and activate chord button
+let chordButton = document.createElement('button');
+chordButton.classList.add('chord-button');
+chordButton.innerHTML = 'chords';
+//when difficulty button is clicked...
+chordButton.addEventListener('click', function () {
+    //enable start button
+    startBtn.disabled = false;
+    //reset start button text to default
+    startBtn.innerHTML = 'begin training';
+    //re-style start button to default 
+    startBtn.classList.add('start-button');
+    //if chord mode is off...
+    if (chordButton.innerHTML === 'chords') {
+        //change inner text to major
+        chordButton.innerHTML = 'major'
+        //enable chord mode
+        chordModeToggle = true;
+        
+    //if chord mode is set to major
+    } else if (chordButton.innerHTML === 'major') {
+        //change inner text to minor
+        chordButton.innerHTML = 'minor'
+
+    //if chord mode is set to minor
+    } else if (chordButton.innerHTML === 'minor') {
+        //change inner text to both
+        chordButton.innerHTML = 'both'
+
+    //if chord mode is set to both
+    }  else if (chordButton.innerHTML === 'both') {
+        //change inner text to chords
+        chordButton.innerHTML = 'chords'
+        //disable chord mode
+        chordModeToggle = false;
+    }
+});
+header.appendChild(chordButton);
 
 //create, style, and activate infinite mode button
 let infiniteButton = document.createElement('button');
@@ -158,6 +230,8 @@ difficultyButton.classList.add('easy');
 difficultyButton.innerHTML = 'easy';
 //when difficulty button is clicked...
 difficultyButton.addEventListener('click', function () {
+    //disable chord mode
+    chordModeToggle = false;
     //enable start button
     startBtn.disabled = false;
     //reset start button text to default
@@ -233,7 +307,11 @@ function startGame () {
     startBtn.disabled = true;
     //play first note after 1 second
     window.setTimeout(() => {
-        playCurrentNote();
+        if (chordModeToggle !== true) {
+            playCurrentNote();
+        } else {
+            playCurrentChord();
+        }
     }, 1000)
 }
 
@@ -259,7 +337,11 @@ function getNote () {
     if (noteIndex < shownNotes) {
         //play the next note
         window.setTimeout(() => {
-            playCurrentNote();
+            if (chordModeToggle !== true) {
+                playCurrentNote();
+            } else {
+                playCurrentChord();
+            }
         }, 1000)
     //else...
     } else {
@@ -284,6 +366,53 @@ function playCurrentNote () {
     oscillator.start();
     //stop the oscillator after 1 sec
     oscillator.stop(context.currentTime + 1);
+    //after the note stops playing...
+    window.setTimeout (() => {
+        //change start button color back to default
+        startBtn.classList.remove('playing-note');
+    }, context.currentTime + 1000)
+}
+
+//plays current note as a chord in noteValues index
+function playCurrentChord () {
+    //make start button green to show audio playing
+    startBtn.classList.add('playing-note');
+    //create oscillators
+    const oscillator = context.createOscillator();
+    const oscillator3rd = context.createOscillator();
+    const oscillator5th = context.createOscillator();
+    //create index of root notes
+    let rootNotes = [...Object.keys(easyOctave)];
+    //get the root note index of the current value
+    let rootNoteIndex = rootNotes.indexOf(noteValues[noteIndex]);
+    //get chord values of root note
+    let chordValues = [];
+    if (chordButton.innerHTML === 'major') {
+        chordValues = Object.values(majorChords)[rootNoteIndex]; 
+    } else if (chordButton.innerHTML === 'minor') {
+        chordValues = Object.values(minorChords)[rootNoteIndex];
+    } else if (chordButton.innerHTML === 'both') {
+        let switchModifier = Math.floor(Math.random() * 2);
+        (switchModifier === 0) ?
+            chordValues = Object.values(majorChords)[rootNoteIndex] :
+            chordValues = Object.values(minorChords)[rootNoteIndex] ;
+    }
+    //set oscillator frequency to the current notes frequency 
+    oscillator.frequency.setValueAtTime((chordValues[0]), 0);
+    oscillator3rd.frequency.setValueAtTime((chordValues[1]), 0);
+    oscillator5th.frequency.setValueAtTime((chordValues[2]), 0);
+    //connect oscillator to master vol
+    oscillator.connect(masterVolume);
+    oscillator3rd.connect(masterVolume);
+    oscillator5th.connect(masterVolume);
+    //start the oscillator
+    oscillator.start();
+    oscillator3rd.start();
+    oscillator5th.start();
+    //stop the oscillator after 1 sec
+    oscillator.stop(context.currentTime + 1);
+    oscillator3rd.stop(context.currentTime + 1);
+    oscillator5th.stop(context.currentTime + 1);
     //after the note stops playing...
     window.setTimeout (() => {
         //change start button color back to default
@@ -471,7 +600,11 @@ function infiniteMode () {
     startBtn.disabled = true;
     //wait 1 second then play the current note
     window.setTimeout(() => {
-        playCurrentNote();
+        if (chordModeToggle !== true) {
+            playCurrentNote();
+        } else {
+            playCurrentChord();
+        }
     }, 1000);
 }
 
@@ -498,7 +631,11 @@ function getInfintiteNote () {
     if (noteIndex < shownNotes) {
         //play next note after 1 second
         window.setTimeout(() => {
-            playCurrentNote();
+            if (chordModeToggle !== true) {
+                playCurrentNote();
+            } else {
+                playCurrentChord();
+            }
         }, 1000)
     //if note the round ends
     } else {
