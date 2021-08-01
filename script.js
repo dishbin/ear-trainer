@@ -14,6 +14,7 @@ const notesModal = document.querySelector('#notes-modal');
 const notesModalTextbox = document.querySelector('#notes-modal-textbox');
 const closeNotesModal = document.querySelector('#close-modal');
 const notesToInclude = document.querySelectorAll('.include-notes');
+const toggleSelectButton = document.querySelector('.toggle-select');
 
 //create tone genereator
 let AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -184,6 +185,9 @@ let infiniteModeToggle = false;
 
 //boolean for knowing if chord mode is activated or not
 let chordModeToggle = false;
+
+//check if all notes in notes modal are selected
+let allNotesSelected = true;
 
 //keeps track of shown notes
 //default set to 12 (all notes)
@@ -785,6 +789,33 @@ function displayNotesModal () {
     //display notes modal
     notesModal.style.display = 'block';
     notesModalTextbox.style.display = 'block';
+    //activate select toggle button
+    console.log(allNotesSelected)
+    notesToInclude.forEach(note => {
+        if (note.checked === false) {
+            allNotesSelected = false;
+        }
+    });
+    console.log(allNotesSelected)
+    if (allNotesSelected === true) {
+        toggleSelectButton.innerHTML = 'deselect all';
+    } else if (allNotesSelected === false) {
+        toggleSelectButton.innerHTML = 'select all';
+    }
+    toggleSelectButton.classList.add('toggle-select-button');
+    toggleSelectButton.addEventListener('click', function () {
+        if (allNotesSelected === true) {
+            notesToInclude.forEach(note => note.checked = false);
+            toggleSelectButton.innerHTML = 'select all';
+            allNotesSelected = false;
+            console.log(allNotesSelected)
+        } else if (allNotesSelected === false) {
+            notesToInclude.forEach(note => note.checked = true);
+            toggleSelectButton.innerHTML = 'deselect all';
+            allNotesSelected = true;
+            console.log(allNotesSelected)
+        }
+    });
     //when close notes modal button is pressed...
     closeNotesModal.addEventListener('click', function () {
         //remove notes modal from display
@@ -796,7 +827,6 @@ function displayNotesModal () {
         startBtn.disabled = false;
         //reset start button text to default
         startBtn.innerHTML = "begin training";
-        
     });
 }
 
