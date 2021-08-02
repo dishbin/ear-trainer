@@ -189,6 +189,21 @@ let chordModeToggle = false;
 //check if all notes in notes modal are selected
 let allNotesSelected = true;
 
+//activate deselect/select all button
+toggleSelectButton.addEventListener('click', function () {
+    if (allNotesSelected === true) {
+        notesToInclude.forEach(note => note.checked = false);
+        toggleSelectButton.innerHTML = 'select all';
+        allNotesSelected = false;
+        console.log(allNotesSelected)
+    } else if (allNotesSelected === false) {
+        notesToInclude.forEach(note => note.checked = true);
+        toggleSelectButton.innerHTML = 'deselect all';
+        allNotesSelected = true;
+        console.log(allNotesSelected)
+    }
+});
+
 //keeps track of shown notes
 //default set to 12 (all notes)
 let shownNotes = 12;
@@ -803,19 +818,7 @@ function displayNotesModal () {
         toggleSelectButton.innerHTML = 'select all';
     }
     toggleSelectButton.classList.add('toggle-select-button');
-    toggleSelectButton.addEventListener('click', function () {
-        if (allNotesSelected === true) {
-            notesToInclude.forEach(note => note.checked = false);
-            toggleSelectButton.innerHTML = 'select all';
-            allNotesSelected = false;
-            console.log(allNotesSelected)
-        } else if (allNotesSelected === false) {
-            notesToInclude.forEach(note => note.checked = true);
-            toggleSelectButton.innerHTML = 'deselect all';
-            allNotesSelected = true;
-            console.log(allNotesSelected)
-        }
-    });
+    
     //when close notes modal button is pressed...
     closeNotesModal.addEventListener('click', function () {
         //remove notes modal from display
