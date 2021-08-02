@@ -805,18 +805,28 @@ function displayNotesModal () {
     notesModal.style.display = 'block';
     notesModalTextbox.style.display = 'block';
     //activate select toggle button
-    console.log(allNotesSelected)
     notesToInclude.forEach(note => {
         if (note.checked === false) {
             allNotesSelected = false;
         }
     });
-    console.log(allNotesSelected)
     if (allNotesSelected === true) {
         toggleSelectButton.innerHTML = 'deselect all';
     } else if (allNotesSelected === false) {
         toggleSelectButton.innerHTML = 'select all';
     }
+    notesToInclude.forEach(note => note.addEventListener('change', function () {
+        notesToInclude.forEach(note => {
+            if (note.checked === false) {
+                allNotesSelected = false;
+            };
+            if (allNotesSelected === true) {
+                toggleSelectButton.innerHTML = 'deselect all';
+            } else if (allNotesSelected === false) {
+                toggleSelectButton.innerHTML = 'select all';
+            };
+        });
+    }));
     toggleSelectButton.classList.add('toggle-select-button');
     
     //when close notes modal button is pressed...
