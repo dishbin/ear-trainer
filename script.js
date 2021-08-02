@@ -398,7 +398,11 @@ function startGame () {
 
 //replays current tone
 function replayTone () {
-    playCurrentNote();
+    if (chordModeToggle !== true) {
+        playCurrentNote();
+    } else {
+        playCurrentChord();
+    }
 }
 
 //logs the user choice, triggers next note and 
