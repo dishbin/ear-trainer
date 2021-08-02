@@ -15,6 +15,9 @@ const notesModalTextbox = document.querySelector('#notes-modal-textbox');
 const closeNotesModal = document.querySelector('#close-modal');
 const notesToInclude = document.querySelectorAll('.include-notes');
 const toggleSelectButton = document.querySelector('.toggle-select');
+const instructionsModal = document.querySelector('#instructions-modal');
+const instructionsTextbox = document.querySelector('#instructions-textbox');
+const closeInstructions = document.querySelector('#close-instructions');
 
 //create tone genereator
 let AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -247,6 +250,8 @@ chordButton.addEventListener('click', function () {
         chordModeToggle = true;
         //style chord button
         chordButton.classList.add('chord-button-active');
+        //change text for replay button
+        replayBtn.innerHTML = 'replay chord';
         
     //if chord mode is set to major
     } else if (chordButton.innerHTML === 'major') {
@@ -266,13 +271,14 @@ chordButton.addEventListener('click', function () {
         chordModeToggle = false;
         //re-style chord button
         chordButton.classList.remove('chord-button-active');
+        replayBtn.innerHTML = 'replay tone';
     }
 });
 header.appendChild(chordButton);
 
 //create, style, and activate infinite mode button
 let infiniteButton = document.createElement('button');
-infiniteButton.innerHTML = '<span>&#8734;</span>';
+infiniteButton.innerHTML = '&#8734';
 infiniteButton.classList.add('infinite-button');
 //when infinite mode button is clicked...
 infiniteButton.addEventListener('click', function () {
@@ -368,6 +374,17 @@ noteButtons.forEach(button => button.classList.add('note-button'))
 
 //gets default shown note values (all)
 getShownNoteValues();
+
+//displays instructions modal
+window.setTimeout(() => {
+    instructionsModal.style.display = 'block';
+    instructionsTextbox.style.display = 'block';
+    closeInstructions.addEventListener('click', function () {
+        instructionsModal.style.display = 'none';
+        instructionsTextbox.style.display = 'none';
+    })
+}, 1000);
+
 
 //starts a normal round
 function startGame () { 
