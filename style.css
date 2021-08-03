@@ -1,5 +1,8 @@
 body {
-    background-color: blanchedalmond;
+    background: linear-gradient(217deg, rgba(226, 212, 178, 0.8), rgba(255,0,0,0) 70.71%),
+                linear-gradient(127deg, rgba(135, 164, 167, 0.8), rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, rgba(144, 124, 145, 0.8), rgba(0,0,255,0) 70.71%);
+    background-size: cover;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -11,10 +14,11 @@ body {
 h1 {
     margin: auto;
     font-size: 50px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.342);
     width: 600px;
     height: auto;
     padding: 0.5em;
+    color: rgb(55, 66, 67);
 
     border-radius: 10px;
     box-shadow: 0px 5px 10px black 
@@ -206,7 +210,9 @@ h1 {
 }
 
 #notes-modal-textbox {
-	background-color: blanchedalmond;
+	background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
 	height: auto;
 	width: 300px;
 	border-radius: 15px;
@@ -261,7 +267,9 @@ h1 {
 }
 
 #modal-textbox {
-	background-color: blanchedalmond;
+	background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
 	height: 475px;
 	width: 300px;
 	border-radius: 15px;
@@ -350,7 +358,9 @@ h1 {
 }
 
 #instructions-textbox {
-    background-color: blanchedalmond;
+    background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
 	height: auto;
 	width: 650px;
 	border-radius: 15px;
@@ -390,12 +400,12 @@ h1 {
 
     .header h1 {
         font-size: x-large;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(255, 255, 255, 0.342);
         width: 100%;
         height: 1em;
         padding: 3px;
         border-radius: 10px;
-        box-shadow: 0px 5px 10px black 
+        box-shadow: 0px 5px 10px black;
     }
 
     .infinite-button {
@@ -530,7 +540,9 @@ h1 {
     }
 
     #modal-textbox {
-        background-color: blanchedalmond;
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
         height: 475px;
         width: 300px;
         border-radius: 15px;
@@ -541,7 +553,9 @@ h1 {
     }
 
     #notes-modal-textbox {
-        background-color: blanchedalmond;
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
         height: auto;
         width: 300px;
         border-radius: 15px;
@@ -569,7 +583,9 @@ h1 {
     }
 
     #instructions-textbox {
-        background-color: blanchedalmond;
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
         height: auto;
         width: 300px;
         border-radius: 15px;
