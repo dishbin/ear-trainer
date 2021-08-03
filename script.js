@@ -236,6 +236,7 @@ chordButton.classList.add('chord-button');
 chordButton.innerHTML = 'chords';
 //when chord button is clicked...
 chordButton.addEventListener('click', function () {
+    removeInfiniteMode();
     //enable start button
     startBtn.disabled = false;
     //reset start button text to default
@@ -294,14 +295,7 @@ infiniteButton.addEventListener('click', function () {
         infiniteMode();
     //if infinite mode is already on
     } else {
-        //remove yellow background
-        infiniteButton.classList.remove('infinite-button-active');
-        //remove getInfiniteNote click listener from each button
-        shownNotesButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
-        //set infinite mode toggle to FALSE
-        infiniteModeToggle = false;
-        //change infinite mode button text back to infinity symbol
-        infiniteButton.innerHTML = '<span>&#8734;</span>';
+        removeInfiniteMode();
         //enable start button
         startBtn.disabled = false;
         //change start button text back to default
@@ -319,6 +313,7 @@ difficultyButton.classList.add('easy');
 difficultyButton.innerHTML = 'easy';
 //when difficulty button is clicked...
 difficultyButton.addEventListener('click', function () {
+    removeInfiniteMode();
     //enable start button
     startBtn.disabled = false;
     //reset start button text to default
@@ -892,4 +887,15 @@ function getShownNoteValues () {
             shownNotesButtons.push(addNoteButton);
         }
     })
+}
+
+function removeInfiniteMode () {
+    //remove yellow background
+    infiniteButton.classList.remove('infinite-button-active');
+    //remove getInfiniteNote click listener from each button
+    shownNotesButtons.forEach(button => button.removeEventListener('click', getInfintiteNote));
+    //set infinite mode toggle to FALSE
+    infiniteModeToggle = false;
+    //change infinite mode button text back to infinity symbol
+    infiniteButton.innerHTML = '<span>&#8734;</span>';
 }
