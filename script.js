@@ -420,6 +420,7 @@ function replayTone () {
 //logs the user choice, triggers next note and 
 //checks for score after each click
 function getNote () {
+    signifyInput();
     //create local variable that equals the value of the button pressed
     let answer = this.value;
     //if answer is equal to the value of the current note
@@ -782,6 +783,7 @@ function infiniteMode () {
 //get note function but for infinite mode
 //on note button click
 function getInfintiteNote () {
+    signifyInput();
     //increment infinite note count
     infiniteNoteCount++;
     //create local variable that stores the value of the note button that was clicked
@@ -898,4 +900,11 @@ function removeInfiniteMode () {
     infiniteModeToggle = false;
     //change infinite mode button text back to infinity symbol
     infiniteButton.innerHTML = '<span>&#8734;</span>';
+}
+
+function signifyInput () {
+    startBtn.classList.add('input-received');
+    window.setTimeout(() => {
+        startBtn.classList.remove('input-received');
+    }, 250)
 }

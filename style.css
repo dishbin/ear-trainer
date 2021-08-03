@@ -377,6 +377,10 @@ h1 {
     color: black;
 }
 
+.input-received {
+    background-color: rgb(250, 250, 134);
+}
+
 @media only screen and (max-width: 400px) {
 
     .header {
@@ -471,6 +475,8 @@ h1 {
     .chord-button-active {
         background-color: rgb(250, 250, 134);
     }
+
+    
 
     .start-button {
         width: 125px;
@@ -581,6 +587,10 @@ h1 {
 
     .description {
         text-align: left;
+    }
+
+    .input-received {
+        background-color: rgb(250, 250, 134);
     }
 }
 
