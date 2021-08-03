@@ -396,7 +396,7 @@ h1 {
 
     .infinite-button {
         margin: 0px 0.5em;
-        margin-top: 1em;
+        margin-top: 2em;
         width: 60px;
         height: 50px;
         font-size: small;
@@ -408,7 +408,7 @@ h1 {
 
     .difficulty-button {
         margin: 0em 0.5em;
-        margin-top: 1em; 
+        margin-top: 2em; 
         width: 60px;
         height: 50px;
         font-size: x-small;
@@ -432,7 +432,7 @@ h1 {
 
     .notes-button {
         margin: 0px 0.5em;
-        margin-top: 1em;
+        margin-top: 2em;
         width: 60px;
         height: 50px;
         font-size: x-small;
@@ -458,7 +458,7 @@ h1 {
 
     .chord-button {
         margin: 0px 0.5em;
-        margin-top: 1em;
+        margin-top: 2em;
         width: 60px;
         height: 50px;
         font-size: x-small;
@@ -476,7 +476,7 @@ h1 {
         width: 125px;
         height: 50px;
         margin: 10px auto;
-        margin-top: 0px;
+        margin-top: 2em;
 
         font-size: large;
         border-radius: 5px;
@@ -500,6 +500,7 @@ h1 {
 
     .button-selects {
         margin: 1em auto;
+        margin-top: 5em;
         width: 300px;
         padding: 5px;
         text-align: center;
