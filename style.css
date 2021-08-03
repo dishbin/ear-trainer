@@ -476,7 +476,7 @@ h1 {
         width: 125px;
         height: 50px;
         margin: 10px auto;
-        margin-top: 2em;
+        margin-top: 0.5em;
 
         font-size: large;
         border-radius: 5px;
@@ -500,7 +500,7 @@ h1 {
 
     .button-selects {
         margin: 1em auto;
-        margin-top: 5em;
+        margin-top: 2.5em;
         width: 300px;
         padding: 5px;
         text-align: center;
