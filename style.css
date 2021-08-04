@@ -1,23 +1,113 @@
 body {
-    background-color: blanchedalmond;
+    background: linear-gradient(217deg, rgba(226, 212, 178, 0.8), rgba(255,0,0,0) 70.71%),
+                linear-gradient(127deg, rgba(135, 164, 167, 0.8), rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, rgba(144, 124, 145, 0.8), rgba(0,0,255,0) 70.71%);
+    background-size: cover;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .header {
-    margin: 50px auto 0px auto;
+    margin: 2em auto 0px auto;
     text-align: center;
 }
 
 h1 {
     margin: auto;
     font-size: 50px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.342);
     width: 600px;
-    height: 150px;
-    padding-top: 85px;
+    height: auto;
+    padding: 0.5em;
+    color: rgb(55, 66, 67);
 
     border-radius: 10px;
     box-shadow: 0px 5px 10px black 
+}
+
+.toggle-select-button {
+    width: 100px;
+    height: 25px;
+    margin: auto;
+    margin-top: 0em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+    
+    background-color: rgba(252, 252, 252, 0.8)
+}
+
+.difficulty-button {
+    margin: 0em 0.5em;
+    margin-top: 1em; 
+    width: 75px;
+    height: 50px;
+    font-size: medium;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.correct {
+    background-color: rgb(153, 255, 153);
+}
+
+.incorrect {
+    background-color: rgb(255, 82, 82);
+}
+
+.easy {
+    background-color: rgb(153, 255, 153);
+}
+
+.medium { 
+    background-color: rgb(250, 250, 134);
+}
+
+.hard {
+    background-color: rgb(255, 82, 82)
+}
+
+.notes-button {
+    margin: 0px 0.5em;
+    margin-top: 1em;
+    width: 75px;
+    height: 50px;
+    font-size: medium;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.chord-button {
+    margin: 0px 0.5em;
+    margin-top: 1em;
+    width: 75px;
+    height: 50px;
+    font-size: medium;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.chord-button-active {
+    background-color: rgb(250, 250, 134);
+}
+
+.infinite-button {
+    margin: 0px 0.5em;
+    margin-top: 1em;
+    width: 75px;
+    height: 50px;
+    font-size: large;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 3px 5px black;
+}
+
+.infinite-button-active {
+    background-color: rgb(250, 250, 134);
 }
 
 .main {
@@ -48,7 +138,7 @@ h1 {
 }
 
 .start-button-red {
-    background-color: red;
+    background-color: rgb(255, 82, 82);
 }
 
 .replay-button {
@@ -73,6 +163,7 @@ h1 {
 
 .button-selects {
     margin: 50px auto;
+    margin-bottom: 8em;
     padding: 5px;
     text-align: center;
 }
@@ -92,7 +183,7 @@ h1 {
 }
 
 .note-button:active {
-    background-color: rgba(250, 250, 250, 1)
+    background-color: rgb(250, 250, 134);
 }
 
 .note-button:disabled {
@@ -102,6 +193,67 @@ h1 {
 .playing-note {
     background-color: rgb(153, 255, 153);
 }
+
+#notes-modal {
+	background-color: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+    display: none;
+}
+
+.centered {
+    text-align: center;
+}
+
+#notes-modal-textbox {
+	background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
+	height: auto;
+	width: 300px;
+	border-radius: 15px;
+    margin: 150px auto;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    padding: 1em;
+}
+
+.notes-modal-header {
+    padding-top: 0.25em;
+    padding-bottom: 1em;
+}
+
+#notes-radio-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.notes-radio-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#close-modal {
+    margin: 2em auto;
+    width: 50px;
+    height: 50px;
+}
+
+#close-instructions {
+    margin: 2em auto;
+    width: 50px;
+    height: 50px;
+}
+
+
 
 #modal {
 	background-color: rgba(0,0,0,0.4);
@@ -116,7 +268,9 @@ h1 {
 }
 
 #modal-textbox {
-	background-color: blanchedalmond;
+	background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
 	height: 475px;
 	width: 300px;
 	border-radius: 15px;
@@ -173,8 +327,10 @@ h1 {
 
 .play-again {
     width: 100px;
-    height: 50px;
+    height: 40px;
     margin: auto;
+    margin-top: 0em;
+    margin-bottom: 1em;
     border-radius: 5px;
     border: none;
     box-shadow: 0px 3px 5px black;
@@ -190,66 +346,154 @@ h1 {
     background-color: rgba(250, 250, 250, 1)
 }
 
-@media only screen and (min-width: 440px) {
-    .start-button {
-        width: 200px;
-        height: 100px;
-        margin: 3px auto;
-    
-        font-size: x-large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
-    .replay-button {
-        width: 200px;
-        height: 100px;
-        margin: 3px auto;
-    
-        font-size: x-large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
-
+#instructions-modal {
+    background-color: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+    display: none;
 }
-@media only screen and (max-width: 330px) {
+
+#instructions-textbox {
+    background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
+	height: auto;
+	width: 650px;
+	border-radius: 15px;
+    margin: 150px auto;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    padding: 1em;
+}
+
+.description {
+    text-align: left;
+}
+
+#instructions-textbox p {
+    margin: 0.5em auto;
+}
+
+#instructions-textbox li {
+    margin: 0.5em auto;
+}
+
+#instructions-textbox hr {
+    color: black;
+}
+
+.input-received {
+    background-color: rgb(250, 250, 134);
+}
+
+@media only screen and (max-width: 400px) {
 
     .header {
-        margin: auto;
-        margin-top: 0.5em;
+        width: 80vw;
+        margin: 0px auto;
     }
 
     .header h1 {
         font-size: x-large;
-        margin: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        width: 75vw;
-        height: 2em;
-        padding: 0.5em 1em;
-        padding-top: 1.5em;
-
+        background-color: rgba(255, 255, 255, 0.342);
+        width: 100%;
+        height: 1em;
+        padding: 3px;
         border-radius: 10px;
-        box-shadow: 0px 5px 10px black 
+        box-shadow: 0px 5px 10px black;
+    }
+
+    .infinite-button {
+        margin: 0px 0.5em;
+        margin-top: 2em;
+        width: 60px;
+        height: 50px;
+        font-size: small;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 3px 5px black;
+        background-color: #FCFCFC;
+    }
+
+    .difficulty-button {
+        margin: 0em 0.5em;
+        margin-top: 2em; 
+        width: 60px;
+        height: 50px;
+        font-size: x-small;
+        text-align: center;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 3px 5px black;
+    }
+
+    .infinite-button-active {
+        background-color: rgb(250, 250, 134);
     }
 
     .main {
-        margin: auto;
+        margin: 0px auto;
         margin-top: 3em;
         text-align: center;
         display: flex;
         flex-direction: column;
     }
 
+    .notes-button {
+        margin: 0px 0.5em;
+        margin-top: 2em;
+        width: 60px;
+        height: 50px;
+        font-size: x-small;
+        text-align: center;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 3px 5px black;
+        background-color: #FCFCFC;
+    }
+
+    .toggle-select-button {
+        width: 100px;
+        height: 25px;
+        margin: auto;
+        margin-top: 0em;
+        margin-bottom: 1em;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 3px 5px black;
+    
+        background-color: rgba(252, 252, 252, 0.8)
+    }
+
+    .chord-button {
+        margin: 0px 0.5em;
+        margin-top: 2em;
+        width: 60px;
+        height: 50px;
+        font-size: x-small;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0px 3px 5px black;
+        background-color: #FCFCFC;
+    }
+    
+    .chord-button-active {
+        background-color: rgb(250, 250, 134);
+    }
+
+    
+
     .start-button {
         width: 125px;
         height: 50px;
         margin: 10px auto;
-        margin-top: 1em;
+        margin-top: 0.5em;
 
         font-size: large;
         border-radius: 5px;
@@ -262,6 +506,7 @@ h1 {
         width: 125px;
         height: 50px;
         margin: auto;
+        margin-bottom: 0px;
 
         font-size: large;
         border-radius: 5px;
@@ -271,7 +516,9 @@ h1 {
     }
 
     .button-selects {
-        margin: 3em auto;
+        margin: 1em auto;
+        margin-top: 2.5em;
+        width: 300px;
         padding: 5px;
         text-align: center;
         margin-bottom: 0px;
@@ -287,8 +534,16 @@ h1 {
         background-color: rgba(252, 252, 252, 0.8)
     }
 
+    #close-instructions {
+        margin: 2em auto;
+        width: 50px;
+        height: 50px;
+    }
+
     #modal-textbox {
-        background-color: blanchedalmond;
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
         height: 475px;
         width: 300px;
         border-radius: 15px;
@@ -298,84 +553,41 @@ h1 {
         text-align: center;
     }
 
-    .playing-note {
-        background-color: rgb(153, 255, 153);
-    }
-}
-
-@media only screen and (min-width: 380px) {
-
-    .header {
-        margin: auto;
-        margin-top: 0.5em;
-    }
-
-    .header h1 {
-        font-size: x-large;
-        margin: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        width: 75vw;
-        height: 2em;
-        padding: 0.5em 1em;
-        padding-top: 1.5em;
-
-        border-radius: 10px;
-        box-shadow: 0px 5px 10px black 
-    }
-
-    .main {
-        margin: auto;
-        margin-top: 3em;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .start-button {
-        width: 125px;
-        height: 50px;
-        margin: 10px auto;
-        margin-top: 1em;
-
-        font-size: large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
-    .replay-button {
-        width: 125px;
-        height: 50px;
-        margin: auto;
-
-        font-size: large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
-    .button-selects {
+    #notes-modal-textbox {
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
+        height: auto;
+        width: 300px;
+        border-radius: 15px;
         margin: 3em auto;
-        padding: 5px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        display: none;
         text-align: center;
-        margin-bottom: 0px;
     }
 
-    .note-button {
-        width: 70px;
-        height: 70px;
-        margin: 5px;
+    .play-again {
+        width: 100px;
+        height: 40px;
+        margin: auto;
+        margin-top: 0em;
+        margin-bottom: 2em;
         border-radius: 5px;
         border: none;
         box-shadow: 0px 3px 5px black;
+    
         background-color: rgba(252, 252, 252, 0.8)
     }
 
-    #modal-textbox {
-        background-color: blanchedalmond;
-        height: 475px;
+    .playing-note {
+        background-color: rgb(153, 255, 153);
+    }
+
+    #instructions-textbox {
+        background: linear-gradient(336deg, rgb(207, 193, 161), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(217deg, rgb(179, 200, 201), rgba(255, 255, 255, 0.6) 70.71%),
+                    linear-gradient(127deg, rgb(144, 170, 152), rgba(255, 255, 255, 0.6) 70.71%);
+        height: auto;
         width: 300px;
         border-radius: 15px;
         margin: 3em auto;
@@ -384,93 +596,27 @@ h1 {
         text-align: center;
     }
 
-    .playing-note {
-        background-color: rgb(153, 255, 153);
+    #close-instructions {
+        margin: 2em auto;
+        width: 50px;
+        height: 50px;
+    }
+
+    .description {
+        text-align: left;
+    }
+
+    .input-received {
+        background-color: rgb(250, 250, 134);
+    }
+
+    #instructions-textbox li {
+        margin: 1em 2em 1em 0.5em;
     }
 }
 
-@media only screen and (max-width: 420px) {
-
-    .header {
-        margin: auto;
-        margin-top: 0.5em;
-    }
-
-    .header h1 {
-        font-size: x-large;
-        margin: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-        width: 75vw;
-        height: 2em;
-        padding: 0.5em 1em;
-        padding-top: 1.5em;
-
-        border-radius: 10px;
-        box-shadow: 0px 5px 10px black 
-    }
-
-    .main {
-        margin: auto;
-        margin-top: 3em;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .start-button {
-        width: 125px;
-        height: 50px;
-        margin: 10px auto;
-        margin-top: 1em;
-
-        font-size: large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
-    .replay-button {
-        width: 125px;
-        height: 50px;
-        margin: auto;
-
-        font-size: large;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8);
-    }
-
+@media only screen and (max-width: 1100px) {
     .button-selects {
-        margin: 3em auto;
-        padding: 5px;
-        text-align: center;
-        margin-bottom: 0px;
-    }
-
-    .note-button {
-        width: 70px;
-        height: 70px;
-        margin: 5px;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 0px 3px 5px black;
-        background-color: rgba(252, 252, 252, 0.8)
-    }
-
-    #modal-textbox {
-        background-color: blanchedalmond;
-        height: 475px;
         width: 300px;
-        border-radius: 15px;
-        margin: 3em auto;
-        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-        display: none;
-        text-align: center;
-    }
-
-    .playing-note {
-        background-color: rgb(153, 255, 153);
     }
 }

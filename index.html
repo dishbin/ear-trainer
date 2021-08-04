@@ -8,6 +8,73 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="instructions-modal">
+        <div id="instructions-textbox">
+            <p class="centered">welcome to the</p>
+            <h2 class="centered">semi-tone ear trainer</h2>
+            <hr>
+            <h3 class="centered">use this app to practice identifying notes and chords by ear</h3>
+            <h4 class="centered">&#127911 headphones recommended &#127911</h4>
+            <hr>
+            <div class="description">
+            <h4>press the 'begin training' button to begin a round</h4>
+            <ul>
+                <li>the default round settings play all 12 tones, from C4 to B4</li>
+                <li>the start button will turn green while the current note is being played</li>
+                <li>after each tone, pick which note you heard and it will automatically move to the next note in the round</li>
+                <li>the note you select will flash yellow to indicate that input was received</li>
+                <li>once the round ends, your score will be displayed along with a list of which notes you got correct and which you got incorrect</li>
+            </ul>
+            </div>
+            <hr>
+            <div class="description">
+            <h4>press the 'replay tone' button to hear the current tone or chord again</h4>
+            </div>
+            <hr>
+            <div class="description">
+            <h4>press the 'notes' button to manually select which notes to practice</h4>
+            <ul>
+                <li>notes with a checkmark will be included in the round</li>
+                <li>buttons for notes without a checkmark will not be displayed</li>
+            </ul>
+            </div>
+            <hr>
+            <div class="description">
+            <h4>use the 'chords' button to practice identifying chords</h4>
+            <ul>
+                <li>pressing the 'chords' button the first time will play only major chords</li>
+                <li>pressing the 'chords' button a second time will play only minor chords</li>
+                <li>pressing the 'chords' button a third time will play both types of chords</li>
+                <li>finally, pressing the 'chords' button a fourth time will disable chord mode</li>
+            </ul>
+            </div>
+            <hr>
+            <div class="description">
+            <h4>press the '&#8734' to enable infinite mode</h4>
+            <ul>
+                <li>upon pressing the '&#8734' button, the button's text will display a percent score</li>
+                <li>while in infinite mode, rounds will seamlessly restart</li>
+                <li>a running percentage score will be displayed on the infinite mode button</li>
+                <li>pressing the infinite mode while a score is displayed will disable infinite mode</li>
+                <li>changing the difficulty and/or enabling chord mode will disable infinte mode</li>
+                <li>you will have to start a new infinite round every time you adjust those settings</li>
+            </ul>
+            </div>
+            <hr>
+            <div class="description">
+            <h4>press the 'easy' button to adjust the dfiiculty</h4>
+            <ul>
+                <li>while in 'easy' mode, only tones between C4 and B4 will be played</li>
+                <li>chord mode on 'easy' will only play normal chords</li>
+                <li>playing in 'medium' mode will add half an octave above and below the default tones</li>
+                <li>chord mode on 'medium' will play normal chords as well as 1st inversion chords</li>
+                <li>playing in 'hard' mode will add a full octave above and below the default tones</li>
+                <li>chord mode on 'hard' will play normal chords, 1st inversion chords, and 2nd inversion chords</li>
+            </ul>
+            </div>
+            <button class="centered" id="close-instructions">&#10006</button>
+        </div>
+    </div>
     <div id="modal">
         <div id="modal-textbox">
         <div id="modal-score">
@@ -26,20 +93,82 @@
         </div>
     </div>
 
+    <div id="notes-modal">
+        <div id="notes-modal-textbox">
+            <h4 class="notes-modal-header">select which notes to include</h4>
+            <button class="toggle-select" id="toggle-select">deselect all</button>
+            <div id="notes-radio-input">
+                <div class="notes-radio-column">
+                    <label for='C'>
+                        C
+                        <input type='checkbox' class='include-notes' name='include-notes' value='C' checked>
+                    </label>
+                    <label for='Csharp'>
+                        C#/D&#9837
+                        <input type='checkbox' class='include-notes' name='include-notes' value='Csharp' checked>
+                    </label>
+                    <label for='D'>
+                        D
+                        <input type='checkbox' class='include-notes' name='include-notes' value='D' checked>
+                    </label>
+                    <label for='Dsharp'>
+                        D#/E&#9837
+                        <input type='checkbox' class='include-notes' name='include-notes' value='Dsharp' checked>
+                    </label>
+                    <label for='E'>
+                        E
+                        <input type='checkbox' class='include-notes' name='include-notes' value='E' checked>
+                    </label>
+                    <label for='F'>
+                        F
+                        <input type='checkbox' class='include-notes' name='include-notes' value='F' checked>
+                    </label>
+                </div>
+                <div class="notes-radio-column">
+                    <label for='Fsharp'>
+                        F#/G&#9837
+                        <input type='checkbox' class='include-notes' name='include-notes' value='Fsharp' checked>
+                    </label>
+                    <label for='G'>
+                        G
+                        <input type='checkbox' class='include-notes' name='include-notes' value='G' checked>
+                    </label>
+                    <label for='Gsharp'>
+                        G#/A&#9837
+                        <input type='checkbox' class='include-notes' name='include-notes' value='Gsharp' checked>
+                    </label>
+                    <label for='A'>
+                        A
+                        <input type='checkbox' class='include-notes' name='include-notes' value='A' checked>
+                    </label>
+                    <label for='Asharp'>
+                        A#/B&#9837
+                        <input type='checkbox' class='include-notes' name='include-notes' value='Asharp' checked>
+                    </label>
+                    <label for='B'>
+                        B
+                        <input type='checkbox' class='include-notes' name='include-notes' value='B' checked>
+                    </label>
+                </div>
+            </div>
+            <button id="close-modal">&#10006</button>
+        </div>
+    </div>
+
     <div class="header"></div>
     <div class="main"></div>
     <div class="button-selects">
         <button class='choice-button' id='C' value='C'>C</button>
-        <button class='choice-button' id='Csharp' value='C-sharp'>C#/D&#9837</button>
+        <button class='choice-button' id='Csharp' value='Csharp'>C#/D&#9837</button>
         <button class='choice-button' id='D' value='D'>D</button>
-        <button class='choice-button' id='Dsharp' value='D-sharp'>D#/E&#9837</button>
+        <button class='choice-button' id='Dsharp' value='Dsharp'>D#/E&#9837</button>
         <button class='choice-button' id='E' value='E'>E</button>
         <button class='choice-button' id='F' value='F'>F</button>
-        <button class='choice-button' id='Fsharp' value='F-sharp'>F#/G&#9837</button>
+        <button class='choice-button' id='Fsharp' value='Fsharp'>F#/G&#9837</button>
         <button class='choice-button' id='G' value='G'>G</button>
-        <button class='choice-button' id='Gsharp' value='G-sharp'>G#/A&#9837</button>
+        <button class='choice-button' id='Gsharp' value='Gsharp'>G#/A&#9837</button>
         <button class='choice-button' id='A' value='A'>A</button>
-        <button class='choice-button' id='Asharp' value='A-sharp'>A#/B&#9837</button>
+        <button class='choice-button' id='Asharp' value='Asharp'>A#/B&#9837</button>
         <button class='choice-button' id='B' value='B'>B</button>
     </div>
     <script src="script.js"></script>
