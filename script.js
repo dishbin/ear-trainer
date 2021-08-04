@@ -198,12 +198,10 @@ toggleSelectButton.addEventListener('click', function () {
         notesToInclude.forEach(note => note.checked = false);
         toggleSelectButton.innerHTML = 'select all';
         allNotesSelected = false;
-        console.log(allNotesSelected)
     } else if (allNotesSelected === false) {
         notesToInclude.forEach(note => note.checked = true);
         toggleSelectButton.innerHTML = 'deselect all';
         allNotesSelected = true;
-        console.log(allNotesSelected)
     }
 });
 
