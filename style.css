@@ -510,6 +510,7 @@ h1 {
     .button-selects {
         margin: 1em auto;
         margin-top: 2.5em;
+        margin-bottom: 5em;
         width: 300px;
         padding: 5px;
         text-align: center;
