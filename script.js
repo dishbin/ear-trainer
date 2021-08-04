@@ -856,6 +856,7 @@ function displayNotesModal () {
         startBtn.disabled = false;
         //reset start button text to default
         startBtn.innerHTML = "begin training";
+        removeInfiniteMode();
     });
 }
 
@@ -898,11 +899,7 @@ function removeInfiniteMode () {
     infiniteModeToggle = false;
     //change infinite mode button text back to infinity symbol
     infiniteButton.innerHTML = '<span>&#8734;</span>';
-}
-
-function signifyInput () {
-    startBtn.classList.add('input-received');
-    window.setTimeout(() => {
-        startBtn.classList.remove('input-received');
-    }, 250)
+    infiniteNoteCount = 0;
+    correctNotes = [];
+    incorrectNotes = [];
 }
